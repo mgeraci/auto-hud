@@ -1,8 +1,4 @@
 Flask==0.10.1
-Flask-Sockets==0.1
-gevent==1.0.2
-gevent-websocket==0.9.5
-greenlet==0.4.9
 itsdangerous==0.24
 Jinja2==2.8
 MarkupSafe==0.23
