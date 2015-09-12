@@ -23,7 +23,9 @@
           return;
         }
       }
-      $("body").html(this.presentationTemplate(nextProps));
+      $("body").html(this.presentationTemplate({
+        d: nextProps
+      }));
       return this.lastProps = $.extend(true, {}, nextProps);
     },
     makeTemplates: function() {
@@ -64,18 +66,20 @@
     view: view,
     controller: controller,
     init: function(params) {
+      console.log(params);
       this.model.view = this.view;
       this.model.controller = this.controller;
       this.view.model = this.model;
       this.view.controller = this.controller;
       this.controller.model = this.model;
       this.controller.view = this.view;
+      this.view.makeTemplates();
       if (params.version == null) {
         window.location.reload();
       } else {
         this.version = params.version;
       }
-      this.view.makeTemplates();
+      this.model.set(params);
       this.versionWatcher = setInterval((function(_this) {
         return function() {
           return _this.fetchVersion();

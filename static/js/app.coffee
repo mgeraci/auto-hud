@@ -18,7 +18,7 @@ view = {
 			return if _.isEqual(@lastProps, nextProps)
 
 		$("body").html(
-			@presentationTemplate(nextProps)
+			@presentationTemplate({d: nextProps})
 		)
 
 		@lastProps = $.extend(true, {}, nextProps)
@@ -65,6 +65,7 @@ window.AutoHUD = {
 	controller: controller
 
 	init: (params)->
+		console.log params
 		# set up cross-references
 		@model.view = @view
 		@model.controller = @controller
@@ -73,13 +74,16 @@ window.AutoHUD = {
 		@controller.model = @model
 		@controller.view = @view
 
+		@view.makeTemplates()
+
 		# set the current version on the sigleton. if it's missing, refresh.
 		if !params.version?
 			window.location.reload()
 		else
 			@version = params.version
 
-		@view.makeTemplates()
+		# send other data over to the model
+		@model.set(params)
 
 		# watch for version changes
 		@versionWatcher = setInterval(=>
