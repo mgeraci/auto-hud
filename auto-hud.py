@@ -4,7 +4,7 @@ from flask import jsonify
 from flask import request
 from datetime import datetime
 
-version = "0.000"
+version = "0.001"
 
 app = Flask(__name__)
 
@@ -16,8 +16,6 @@ def index_route(params={}):
 
 @app.route("/version")
 def version_route():
-    #d = datetime.now()
-
     data = {}
     data["version"] = version
 

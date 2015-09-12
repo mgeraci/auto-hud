@@ -3,7 +3,7 @@ model = {
 
 	set: (props) ->
 		$.extend(true, @data, props)
-		AutoHUD.render(@getAll())
+		AutoHUD.view.render(@getAll())
 
 	get: (prop)->
 		return @data[prop]
@@ -12,31 +12,7 @@ model = {
 		return @data
 }
 
-window.AutoHUD = {
-	versionPollTime: 5000
-	model: model
-	months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-
-	init: (params)->
-		# set the current version on the sigleton. if it's missing, refresh.
-		if !params.version?
-			window.location.reload()
-		else
-			@version = params.version
-
-		@makeTemplates()
-
-		# watch for version changes
-		@versionWatcher = setInterval(=>
-			@fetchVersion()
-		, @versionPollTime)
-
-		@watchTime()
-
-
-	# render
-	#############################################################################
-
+view = {
 	render: (nextProps) ->
 		if @lastProps?
 			return if _.isEqual(@lastProps, nextProps)
@@ -47,28 +23,15 @@ window.AutoHUD = {
 
 		@lastProps = $.extend(true, {}, nextProps)
 
+	makeTemplates: ->
+		@presentationTemplate = _.template($("#presentation-template").html())
+}
 
-	# versioning
-	#############################################################################
+controller = {
+	months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
-	fetchVersion: ->
-		$.ajax("/version", {
-			type: "GET"
-			success: (data) =>
-				@parseVersion(data)
-			error: =>
-				console.log "no response"
-		})
-
-	parseVersion: (data) ->
-		return if !data.version?
-
-		# if the version has updated, refresh the page
-		if data.version != @version
-			window.location.reload()
-			return
-
-		console.log data
+	setWatchers: ->
+		@watchTime()
 
 
 	# time and date
@@ -92,11 +55,56 @@ window.AutoHUD = {
 			time: "#{d.getHours()}:#{d.getMinutes()}:#{seconds}"
 			date: "#{month} #{d.getDate()}, #{d.getFullYear()}"
 		})
+}
+
+window.AutoHUD = {
+	versionPollTime: 5000
+
+	model: model
+	view: view
+	controller: controller
+
+	init: (params)->
+		# set up cross-references
+		@model.view = @view
+		@model.controller = @controller
+		@view.model = @model
+		@view.controller = @controller
+		@controller.model = @model
+		@controller.view = @view
+
+		# set the current version on the sigleton. if it's missing, refresh.
+		if !params.version?
+			window.location.reload()
+		else
+			@version = params.version
+
+		@view.makeTemplates()
+
+		# watch for version changes
+		@versionWatcher = setInterval(=>
+			@fetchVersion()
+		, @versionPollTime)
+
+		@controller.setWatchers()
 
 
-	# util
+	# versioning
 	#############################################################################
 
-	makeTemplates: ->
-		@presentationTemplate = _.template($("#presentation-template").html())
+	fetchVersion: ->
+		$.ajax("/version", {
+			type: "GET"
+			success: (data) =>
+				@parseVersion(data)
+			error: =>
+				console.log "no response from the version watcher; the server must be down."
+		})
+
+	parseVersion: (data) ->
+		return if !data.version?
+
+		# if the version has updated, refresh the page
+		if data.version != @version
+			window.location.reload()
 }
