@@ -10,6 +10,10 @@ example `localsettings.py` file:
 # swap the css, js, or template
 VERSION = "0.000"
 
+# your info for forecast.io
+FORECASTIO_API_KEY = "[your api key]"
+FORECASTIO_LAT_LONG = "40.676423,-73.980488"
+
 # add birthdays with a tuple of (month, day) as a key, and a list of people and
 # their birthyears. accepts multiple people on the same day. years are optional.
 BIRTHDAYS = {
