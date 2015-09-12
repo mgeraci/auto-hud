@@ -28,10 +28,13 @@ view = {
 }
 
 controller = {
+	weatherPollTime: 1000 * 60 * 5
+	weatherUrl: "https://api.forecast.io/forecast/"
 	months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
 	setWatchers: ->
 		@watchTime()
+		@watchWeather()
 
 
 	# time and date
@@ -55,6 +58,54 @@ controller = {
 			time: "#{d.getHours()}:#{d.getMinutes()}:#{seconds}"
 			date: "#{month} #{d.getDate()}, #{d.getFullYear()}"
 		})
+
+
+	# weather
+	#############################################################################
+
+	watchWeather: ->
+		@getWeather()
+		setInterval(=>
+			@getWeather()
+		, @weatherPollTime)
+
+	getWeather: ->
+		url = "#{@weatherUrl}#{@model.get("forecastioApiKey")}/#{@model.get("forecastioLatLong")}"
+
+		# to use test data, comment out the `getJSON` and add:
+		# @formatWeather(weatherData)
+		$.getJSON("#{url}?callback=?", (data) =>
+			@formatWeather(data)
+		)
+
+
+	###
+	Format weather data from forecast.io into something a little more simple:
+	current: 75º, rain
+	today: 65º-77º, rain in the afternoon
+	###
+	formatWeather: (data) ->
+		weather = {
+			current: {}
+			today: {}
+		}
+
+		weather.current.temperature = @formatTemperature(data.currently.apparentTemperature)
+		weather.current.summary = data.currently.summary
+		weather.current.icon = data.currently.icon
+
+		today = data.daily.data[0]
+
+		weather.today.low = @formatTemperature(today.temperatureMin)
+		weather.today.high = @formatTemperature(today.temperatureMax)
+		weather.today.summary = today.summary
+		weather.today.icon = today.icon
+
+		@model.set({weather: weather})
+
+	formatTemperature: (temperature) ->
+		temperature = Math.round(temperature)
+		return "#{temperature}ºF"
 }
 
 window.AutoHUD = {
@@ -65,7 +116,6 @@ window.AutoHUD = {
 	controller: controller
 
 	init: (params)->
-		console.log params
 		# set up cross-references
 		@model.view = @view
 		@model.controller = @controller

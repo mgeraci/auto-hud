@@ -34,9 +34,12 @@
   };
 
   controller = {
+    weatherPollTime: 1000 * 60 * 5,
+    weatherUrl: "https://api.forecast.io/forecast/",
     months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
     setWatchers: function() {
-      return this.watchTime();
+      this.watchTime();
+      return this.watchWeather();
     },
     watchTime: function() {
       return this.timeWatcher = setInterval((function(_this) {
@@ -57,6 +60,51 @@
         time: (d.getHours()) + ":" + (d.getMinutes()) + ":" + seconds,
         date: month + " " + (d.getDate()) + ", " + (d.getFullYear())
       });
+    },
+    watchWeather: function() {
+      this.getWeather();
+      return setInterval((function(_this) {
+        return function() {
+          return _this.getWeather();
+        };
+      })(this), this.weatherPollTime);
+    },
+    getWeather: function() {
+      var url;
+      url = "" + this.weatherUrl + (this.model.get("forecastioApiKey")) + "/" + (this.model.get("forecastioLatLong"));
+      return $.getJSON(url + "?callback=?", (function(_this) {
+        return function(data) {
+          return _this.formatWeather(data);
+        };
+      })(this));
+    },
+
+    /*
+    	Format weather data from forecast.io into something a little more simple:
+    	current: 75º, rain
+    	today: 65º-77º, rain in the afternoon
+     */
+    formatWeather: function(data) {
+      var today, weather;
+      weather = {
+        current: {},
+        today: {}
+      };
+      weather.current.temperature = this.formatTemperature(data.currently.apparentTemperature);
+      weather.current.summary = data.currently.summary;
+      weather.current.icon = data.currently.icon;
+      today = data.daily.data[0];
+      weather.today.low = this.formatTemperature(today.temperatureMin);
+      weather.today.high = this.formatTemperature(today.temperatureMax);
+      weather.today.summary = today.summary;
+      weather.today.icon = today.icon;
+      return this.model.set({
+        weather: weather
+      });
+    },
+    formatTemperature: function(temperature) {
+      temperature = Math.round(temperature);
+      return temperature + "ºF";
     }
   };
 
@@ -66,7 +114,6 @@
     view: view,
     controller: controller,
     init: function(params) {
-      console.log(params);
       this.model.view = this.view;
       this.model.controller = this.controller;
       this.view.model = this.model;

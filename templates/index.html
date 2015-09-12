@@ -4,26 +4,52 @@
 		<title>Auto-HUD</title>
 		<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-2.1.4.min.js') }}"></script>
 		<script type="text/javascript" src="{{ url_for('static', filename='js/underscore.min.js') }}"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='js/weather_test.js') }}"></script>
 		<script type="text/javascript" src="{{ url_for('static', filename='js/app.js') }}"></script>
 		<link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}" />
 	</head>
 	<body>
 		<script id="presentation-template" type="text/template">
 			<% if (d.time) { %>
-				<h2><%= d.time %></h2>
+				<h2 class="hud-section hud-section-time">
+					<%= d.time %>
+				</h2>
 			<% } %>
+
 			<% if (d.date) { %>
-				<h3><%= d.date %></h3>
+				<h3 class="hud-section hud-section-date">
+					<%= d.date %>
+				</h3>
 			<% } %>
 
 			<% if (d.birthdays && d.birthdays.length) { %>
-				<ul class="birthdays">
+				<ul class="hud-section hud-section-birthdays">
 					<% _.each((d.birthdays), function(birthday) { %>
 						<li>
 							Today is <%= birthday.name %>'s <%= birthday.age %><%= birthday.postfix %> birthday!
 						</li>
 					<% }) %>
 				</ul>
+			<% } %>
+
+			<% if (d.weather) { %>
+				<ul class="hud-section hud-section-weather">
+					<li class="hud-section-weather-current">
+						<%= d.weather.current.temperature %>, <%= d.weather.current.summary %>
+						<% if (d.weather.current.icon) { %>
+							<span class="hud-section-weather-icon <%= d.weather.current.icon %>"></span>
+						<% } %>
+					</li>
+					<li class="hud-section-weather-today">
+						<%= d.weather.today.low %>
+						/
+						<%= d.weather.today.high %>
+						<%= d.weather.today.summary %>
+						<% if (d.weather.today.icon) { %>
+							<span class="hud-section-weather-icon <%= d.weather.today.icon %>"></span>
+						<% } %>
+					</li>
+				</div>
 			<% } %>
 		</script>
 

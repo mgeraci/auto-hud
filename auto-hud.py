@@ -7,6 +7,8 @@ from datetime import date
 # local configs
 from localsettings import VERSION
 from localsettings import BIRTHDAYS
+from localsettings import FORECASTIO_API_KEY
+from localsettings import FORECASTIO_LAT_LONG
 
 app = Flask(__name__)
 
@@ -40,6 +42,8 @@ def index_route(params={}):
 
     return render_template("index.html", params = {
       "version": VERSION,
+      "forecastioApiKey": FORECASTIO_API_KEY,
+      "forecastioLatLong": FORECASTIO_LAT_LONG,
       "birthdays": birthdays
     })
 
