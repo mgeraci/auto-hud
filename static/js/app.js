@@ -17,19 +17,35 @@
   };
 
   view = {
+    templates: {},
     render: function(nextProps) {
+      var section, _i, _len, _ref;
+      if (_.isEqual({}, this.templates)) {
+        return;
+      }
       if (this.lastProps != null) {
         if (_.isEqual(this.lastProps, nextProps)) {
           return;
         }
       }
-      $("body").html(this.presentationTemplate({
-        d: nextProps
-      }));
+      _ref = this.model.get("sections");
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        section = _ref[_i];
+        $("#" + section + "-wrapper").html(this.templates[section]({
+          d: nextProps
+        }));
+      }
       return this.lastProps = $.extend(true, {}, nextProps);
     },
     makeTemplates: function() {
-      return this.presentationTemplate = _.template($("#presentation-template").html());
+      var section, _i, _len, _ref, _results;
+      _ref = this.model.get("sections");
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        section = _ref[_i];
+        _results.push(this.templates[section] = _.template($("#" + section + "-template").html()));
+      }
+      return _results;
     }
   };
 
@@ -49,15 +65,19 @@
       })(this), 1000);
     },
     setTime: function() {
-      var d, month, seconds;
+      var d, minutes, month, seconds;
       d = new Date();
+      minutes = d.getMinutes();
+      if (minutes < 10) {
+        minutes = "0" + minutes;
+      }
       seconds = d.getSeconds();
       if (seconds < 10) {
         seconds = "0" + seconds;
       }
       month = this.months[d.getMonth()];
       return this.model.set({
-        time: (d.getHours()) + ":" + (d.getMinutes()) + ":" + seconds,
+        time: (d.getHours()) + ":" + minutes + ":" + seconds,
         date: month + " " + (d.getDate()) + ", " + (d.getFullYear())
       });
     },
@@ -114,19 +134,20 @@
     view: view,
     controller: controller,
     init: function(params) {
+      console.log(params);
       this.model.view = this.view;
       this.model.controller = this.controller;
       this.view.model = this.model;
       this.view.controller = this.controller;
       this.controller.model = this.model;
       this.controller.view = this.view;
+      this.model.set(params);
       this.view.makeTemplates();
       if (params.version == null) {
         window.location.reload();
       } else {
         this.version = params.version;
       }
-      this.model.set(params);
       this.versionWatcher = setInterval((function(_this) {
         return function() {
           return _this.fetchVersion();

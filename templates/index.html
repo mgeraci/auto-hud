@@ -9,29 +9,39 @@
 		<link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}" />
 	</head>
 	<body>
-		<script id="presentation-template" type="text/template">
+		{% for section in params.sections %}
+			<div id="{{ section }}-wrapper"></div>
+		{% endfor %}
+
+		<script id="time-template" type="text/template">
 			<% if (d.time) { %>
 				<h2 class="hud-section hud-section-time">
 					<%= d.time %>
 				</h2>
 			<% } %>
+		</script>
 
+		<script id="date-template" type="text/template">
 			<% if (d.date) { %>
 				<h3 class="hud-section hud-section-date">
 					<%= d.date %>
 				</h3>
 			<% } %>
+		</script>
 
+		<script id="birthdays-template" type="text/template">
 			<% if (d.birthdays && d.birthdays.length) { %>
 				<ul class="hud-section hud-section-birthdays">
 					<% _.each((d.birthdays), function(birthday) { %>
 						<li>
-							Today is <%= birthday.name %>'s <%= birthday.age %><%= birthday.postfix %> birthday!
+							Today is <%= birthday.name %>'s <%= birthday.age %><%= birthday.postfix %> birthday
 						</li>
 					<% }) %>
 				</ul>
 			<% } %>
+		</script>
 
+		<script id="weather-template" type="text/template">
 			<% if (d.weather) { %>
 				<ul class="hud-section hud-section-weather">
 					<li class="hud-section-weather-current">

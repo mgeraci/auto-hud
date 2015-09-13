@@ -13,18 +13,26 @@ model = {
 }
 
 view = {
+	templates: {}
+
 	render: (nextProps) ->
+		# bail if we haven't initialized the templates yet (race condition on
+		# startup)
+		return if _.isEqual({}, @templates)
+
 		if @lastProps?
 			return if _.isEqual(@lastProps, nextProps)
 
-		$("body").html(
-			@presentationTemplate({d: nextProps})
-		)
+		for section in @model.get("sections")
+			$("##{section}-wrapper").html(
+				@templates[section]({d: nextProps})
+			)
 
 		@lastProps = $.extend(true, {}, nextProps)
 
 	makeTemplates: ->
-		@presentationTemplate = _.template($("#presentation-template").html())
+		for section in @model.get("sections")
+			@templates[section] = _.template($("##{section}-template").html())
 }
 
 controller = {
@@ -48,6 +56,10 @@ controller = {
 	setTime: ->
 		d = new Date()
 
+		minutes = d.getMinutes()
+		if minutes < 10
+			minutes = "0#{minutes}"
+
 		seconds = d.getSeconds()
 		if seconds < 10
 			seconds = "0#{seconds}"
@@ -55,7 +67,7 @@ controller = {
 		month = @months[d.getMonth()]
 
 		@model.set({
-			time: "#{d.getHours()}:#{d.getMinutes()}:#{seconds}"
+			time: "#{d.getHours()}:#{minutes}:#{seconds}"
 			date: "#{month} #{d.getDate()}, #{d.getFullYear()}"
 		})
 
@@ -77,7 +89,6 @@ controller = {
 		$.getJSON("#{url}?callback=?", (data) =>
 			@formatWeather(data)
 		)
-
 
 	###
 	Format weather data from forecast.io into something a little more simple:
@@ -116,6 +127,7 @@ window.AutoHUD = {
 	controller: controller
 
 	init: (params)->
+		console.log params
 		# set up cross-references
 		@model.view = @view
 		@model.controller = @controller
@@ -124,6 +136,9 @@ window.AutoHUD = {
 		@controller.model = @model
 		@controller.view = @view
 
+		# send data to the model
+		@model.set(params)
+
 		@view.makeTemplates()
 
 		# set the current version on the sigleton. if it's missing, refresh.
@@ -131,9 +146,6 @@ window.AutoHUD = {
 			window.location.reload()
 		else
 			@version = params.version
-
-		# send other data over to the model
-		@model.set(params)
 
 		# watch for version changes
 		@versionWatcher = setInterval(=>
