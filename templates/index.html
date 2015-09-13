@@ -2,10 +2,10 @@
 <html>
 	<head>
 		<title>Auto-HUD</title>
-		<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-2.1.4.min.js') }}"></script>
-		<script type="text/javascript" src="{{ url_for('static', filename='js/underscore.min.js') }}"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='js/lib/jquery-2.1.4.min.js') }}"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='js/lib/underscore.min.js') }}"></script>
 		<script type="text/javascript" src="{{ url_for('static', filename='js/weather_test.js') }}"></script>
-		<script type="text/javascript" src="{{ url_for('static', filename='js/app.js') }}"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='js/build.js') }}"></script>
 		<link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}" />
 	</head>
 	<body>
@@ -76,7 +76,7 @@
 		</script>
 
 		<script>
-				AutoHUD.init({{ params|safe }});
+			AutoHUD.init({{ params|safe }});
 		</script>
 	</body>
 </html>

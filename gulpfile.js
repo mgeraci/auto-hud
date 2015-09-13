@@ -1,24 +1,34 @@
 var gulp = require("gulp");
-var gutil = require("gulp-util");
+var concat = require("gulp-concat");
+var util = require("gulp-util");
 var sass = require("gulp-ruby-sass");
 var coffee = require("gulp-coffee");
 
 var static = "./static/";
+var cssDir = static + "css/";
+var cssFile = cssDir + "app.sass";
+var cssFiles = cssDir + "**/*.sass";
+
+var jsDir = static + "js/";
+var jsFile = jsDir + "app.coffee";
+var jsFiles = jsDir + "**/*.coffee";
 
 gulp.task("default", function() {
-	gulp.watch(static + "css/*.sass", ["compile-sass"]);
-	gulp.watch(static + "js/*.coffee", ["compile-coffee"]);
+	gulp.watch(cssFiles, ["compileSass"]);
+	gulp.watch(jsFiles, ["compileCoffee"]);
 });
 
-gulp.task("compile-sass", function() {
-	return sass(static + "css/app.sass")
+gulp.task("compileSass", function() {
+	return sass(cssFile)
 		.on('error', sass.logError)
-		.pipe(gulp.dest(static + "css/"));
+		.pipe(gulp.dest(cssDir));
 });
 
-gulp.task("compile-coffee", function() {
-  gulp.src(static + "js/*.coffee")
-    .pipe(coffee({bare: true})
-		.on('error', gutil.log))
-    .pipe(gulp.dest(static + "js/"));
+gulp.task("compileCoffee", function() {
+	return gulp.src(jsFiles)
+		.pipe(
+			coffee({bare: true}).on('error', util.log)
+		)
+		.pipe(concat("build.js"))
+		.pipe(gulp.dest(jsDir))
 });

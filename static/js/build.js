@@ -1,51 +1,60 @@
-var controller, model, view;
-
-model = {
-  data: {},
-  set: function(props) {
-    $.extend(true, this.data, props);
-    return AutoHUD.view.render(this.getAll());
+window.AutoHUD = {
+  versionPollTime: 5000,
+  init: function(params) {
+    console.log(params);
+    this.C = params.C;
+    this.model = AutoHUDModel;
+    this.view = AutoHUDView;
+    this.controller = AutoHUDController;
+    this.model.view = this.view;
+    this.model.controller = this.controller;
+    this.model.C = params.C;
+    this.view.model = this.model;
+    this.view.controller = this.controller;
+    this.view.C = params.C;
+    this.controller.model = this.model;
+    this.controller.view = this.view;
+    this.controller.C = params.C;
+    this.model.set(params);
+    this.view.makeTemplates();
+    if (params.version == null) {
+      window.location.reload();
+    } else {
+      this.version = params.version;
+    }
+    this.versionWatcher = setInterval((function(_this) {
+      return function() {
+        return _this.fetchVersion();
+      };
+    })(this), this.versionPollTime);
+    return this.controller.setWatchers();
   },
-  get: function(prop) {
-    return this.data[prop];
+  fetchVersion: function() {
+    return $.ajax("/version", {
+      type: "GET",
+      success: (function(_this) {
+        return function(data) {
+          return _this.parseVersion(data);
+        };
+      })(this),
+      error: (function(_this) {
+        return function() {
+          return console.log("no response from the version watcher; the server must be down.");
+        };
+      })(this)
+    });
   },
-  getAll: function() {
-    return this.data;
-  }
-};
-
-view = {
-  templates: {},
-  render: function(nextProps) {
-    var i, len, ref, section;
-    if (_.isEqual({}, this.templates)) {
+  parseVersion: function(data) {
+    if (data.version == null) {
       return;
     }
-    ref = this.C.sections;
-    for (i = 0, len = ref.length; i < len; i++) {
-      section = ref[i];
-      if ((this.lastProps != null) && _.isEqual(this.lastProps[section], nextProps[section])) {
-        continue;
-      }
-      $("#" + section + "-wrapper").html(this.templates[section]({
-        d: nextProps
-      }));
+    if (data.version !== this.version) {
+      return window.location.reload();
     }
-    return this.lastProps = $.extend(true, {}, nextProps);
-  },
-  makeTemplates: function() {
-    var i, len, ref, results, section;
-    ref = this.C.sections;
-    results = [];
-    for (i = 0, len = ref.length; i < len; i++) {
-      section = ref[i];
-      results.push(this.templates[section] = _.template($("#" + section + "-template").html()));
-    }
-    return results;
   }
 };
 
-controller = {
+window.AutoHUDController = {
   setWatchers: function() {
     this.watchTime();
     this.watchWeather();
@@ -167,58 +176,47 @@ controller = {
   }
 };
 
-window.AutoHUD = {
-  versionPollTime: 5000,
-  model: model,
-  view: view,
-  controller: controller,
-  init: function(params) {
-    console.log(params);
-    this.C = params.C;
-    this.model.view = this.view;
-    this.model.controller = this.controller;
-    this.model.C = params.C;
-    this.view.model = this.model;
-    this.view.controller = this.controller;
-    this.view.C = params.C;
-    this.controller.model = this.model;
-    this.controller.view = this.view;
-    this.controller.C = params.C;
-    this.model.set(params);
-    this.view.makeTemplates();
-    if (params.version == null) {
-      window.location.reload();
-    } else {
-      this.version = params.version;
-    }
-    this.versionWatcher = setInterval((function(_this) {
-      return function() {
-        return _this.fetchVersion();
-      };
-    })(this), this.versionPollTime);
-    return this.controller.setWatchers();
+window.AutoHUDModel = {
+  data: {},
+  set: function(props) {
+    $.extend(true, this.data, props);
+    return AutoHUD.view.render(this.getAll());
   },
-  fetchVersion: function() {
-    return $.ajax("/version", {
-      type: "GET",
-      success: (function(_this) {
-        return function(data) {
-          return _this.parseVersion(data);
-        };
-      })(this),
-      error: (function(_this) {
-        return function() {
-          return console.log("no response from the version watcher; the server must be down.");
-        };
-      })(this)
-    });
+  get: function(prop) {
+    return this.data[prop];
   },
-  parseVersion: function(data) {
-    if (data.version == null) {
+  getAll: function() {
+    return this.data;
+  }
+};
+
+window.AutoHUDView = {
+  templates: {},
+  render: function(nextProps) {
+    var i, len, ref, section;
+    if (_.isEqual({}, this.templates)) {
       return;
     }
-    if (data.version !== this.version) {
-      return window.location.reload();
+    ref = this.C.sections;
+    for (i = 0, len = ref.length; i < len; i++) {
+      section = ref[i];
+      if ((this.lastProps != null) && _.isEqual(this.lastProps[section], nextProps[section])) {
+        continue;
+      }
+      $("#" + section + "-wrapper").html(this.templates[section]({
+        d: nextProps
+      }));
     }
+    return this.lastProps = $.extend(true, {}, nextProps);
+  },
+  makeTemplates: function() {
+    var i, len, ref, results, section;
+    ref = this.C.sections;
+    results = [];
+    for (i = 0, len = ref.length; i < len; i++) {
+      section = ref[i];
+      results.push(this.templates[section] = _.template($("#" + section + "-template").html()));
+    }
+    return results;
   }
 };
