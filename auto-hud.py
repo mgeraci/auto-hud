@@ -2,21 +2,18 @@ from flask import Flask
 from flask import render_template
 from flask import jsonify
 from flask import request
+from flask import Response
 from datetime import date
+import requests
 
-# local constants
+# secret settings
 from localsettings import VERSION
 from localsettings import BIRTHDAYS
 from localsettings import FORECASTIO_API_KEY
 from localsettings import FORECASTIO_LAT_LONG
 
-# general constants
-SECTIONS = [
-    "time",
-    "date",
-    "birthdays",
-    "weather",
-]
+# general settings
+from constants import C
 
 app = Flask(__name__)
 
@@ -48,13 +45,18 @@ def index_route(params={}):
 
         birthdays = today_birthdays
 
-    return render_template("index.html", params = {
-      "version": VERSION,
-      "sections": SECTIONS,
-      "forecastioApiKey": FORECASTIO_API_KEY,
-      "forecastioLatLong": FORECASTIO_LAT_LONG,
-      "birthdays": birthdays
+    return render_template('index.html', params = {
+      'version': VERSION,
+      'C': C,
+      'forecastioApiKey': FORECASTIO_API_KEY,
+      'forecastioLatLong': FORECASTIO_LAT_LONG,
+      'birthdays': birthdays
     })
+
+@app.route("/mta-service-status")
+def mta_service_status():
+    r = requests.get(C['subwayRemoteUrl'])
+    return Response(r.text, mimetype='text/xml')
 
 @app.route("/version")
 def version_route():

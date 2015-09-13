@@ -20,7 +20,7 @@ view = {
 		# startup)
 		return if _.isEqual({}, @templates)
 
-		for section in @model.get("sections")
+		for section in @C.sections
 			if @lastProps? && _.isEqual(@lastProps[section], nextProps[section])
 				continue
 
@@ -31,18 +31,15 @@ view = {
 		@lastProps = $.extend(true, {}, nextProps)
 
 	makeTemplates: ->
-		for section in @model.get("sections")
+		for section in @C.sections
 			@templates[section] = _.template($("##{section}-template").html())
 }
 
 controller = {
-	weatherPollTime: 1000 * 60 * 5
-	weatherUrl: "https://api.forecast.io/forecast/"
-	months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-
 	setWatchers: ->
 		@watchTime()
 		@watchWeather()
+		@watchSubwayStatus()
 
 
 	# time and date
@@ -64,7 +61,7 @@ controller = {
 		if seconds < 10
 			seconds = "0#{seconds}"
 
-		month = @months[d.getMonth()]
+		month = @C.months[d.getMonth()]
 
 		@model.set({
 			time: "#{d.getHours()}:#{minutes}:#{seconds}"
@@ -79,10 +76,10 @@ controller = {
 		@getWeather()
 		setInterval(=>
 			@getWeather()
-		, @weatherPollTime)
+		, @C.weatherPollTime)
 
 	getWeather: ->
-		url = "#{@weatherUrl}#{@model.get("forecastioApiKey")}/#{@model.get("forecastioLatLong")}"
+		url = "#{@C.weatherUrl}#{@model.get("forecastioApiKey")}/#{@model.get("forecastioLatLong")}"
 
 		# to use test data, comment out the `getJSON` and add:
 		# @formatWeather(weatherData)
@@ -116,7 +113,41 @@ controller = {
 
 	formatTemperature: (temperature) ->
 		temperature = Math.round(temperature)
+
 		return "#{temperature}ºF"
+
+
+	# subway
+	#############################################################################
+
+	watchSubwayStatus: ->
+		@getSubwayStatus()
+		setInterval(=>
+			@getSubwayStatus()
+		, @C.subwayPollTime)
+
+	getSubwayStatus: ->
+		$.ajax(@C.subwayUrl, {
+			type: "GET"
+			dataType: "xml"
+			success: (data) =>
+				@parseSubwayStatus(data)
+		})
+
+	parseSubwayStatus: (data) ->
+		subwayStatus = {}
+
+		return if !data || !$(data).length
+
+		for line in $(data).find("service subway line")
+			line = $(line)
+			name = line.find("name")
+			status = line.find("status")
+			continue if !name.length || !status.length
+
+			subwayStatus[name.text()] = status.text()
+
+		@model.set({subwayStatus: subwayStatus})
 }
 
 window.AutoHUD = {
@@ -128,13 +159,18 @@ window.AutoHUD = {
 
 	init: (params)->
 		console.log params
+		@C = params.C
+
 		# set up cross-references
 		@model.view = @view
 		@model.controller = @controller
+		@model.C = params.C
 		@view.model = @model
 		@view.controller = @controller
+		@view.C = params.C
 		@controller.model = @model
 		@controller.view = @view
+		@controller.C = params.C
 
 		# send data to the model
 		@model.set(params)

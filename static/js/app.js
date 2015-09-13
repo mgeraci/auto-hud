@@ -23,7 +23,7 @@
       if (_.isEqual({}, this.templates)) {
         return;
       }
-      _ref = this.model.get("sections");
+      _ref = this.C.sections;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         section = _ref[_i];
         if ((this.lastProps != null) && _.isEqual(this.lastProps[section], nextProps[section])) {
@@ -37,7 +37,7 @@
     },
     makeTemplates: function() {
       var section, _i, _len, _ref, _results;
-      _ref = this.model.get("sections");
+      _ref = this.C.sections;
       _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         section = _ref[_i];
@@ -48,12 +48,10 @@
   };
 
   controller = {
-    weatherPollTime: 1000 * 60 * 5,
-    weatherUrl: "https://api.forecast.io/forecast/",
-    months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
     setWatchers: function() {
       this.watchTime();
-      return this.watchWeather();
+      this.watchWeather();
+      return this.watchSubwayStatus();
     },
     watchTime: function() {
       return this.timeWatcher = setInterval((function(_this) {
@@ -73,7 +71,7 @@
       if (seconds < 10) {
         seconds = "0" + seconds;
       }
-      month = this.months[d.getMonth()];
+      month = this.C.months[d.getMonth()];
       return this.model.set({
         time: (d.getHours()) + ":" + minutes + ":" + seconds,
         date: month + " " + (d.getDate()) + ", " + (d.getFullYear())
@@ -85,11 +83,11 @@
         return function() {
           return _this.getWeather();
         };
-      })(this), this.weatherPollTime);
+      })(this), this.C.weatherPollTime);
     },
     getWeather: function() {
       var url;
-      url = "" + this.weatherUrl + (this.model.get("forecastioApiKey")) + "/" + (this.model.get("forecastioLatLong"));
+      url = "" + this.C.weatherUrl + (this.model.get("forecastioApiKey")) + "/" + (this.model.get("forecastioLatLong"));
       return $.getJSON(url + "?callback=?", (function(_this) {
         return function(data) {
           return _this.formatWeather(data);
@@ -123,6 +121,46 @@
     formatTemperature: function(temperature) {
       temperature = Math.round(temperature);
       return temperature + "ºF";
+    },
+    watchSubwayStatus: function() {
+      this.getSubwayStatus();
+      return setInterval((function(_this) {
+        return function() {
+          return _this.getSubwayStatus();
+        };
+      })(this), this.C.subwayPollTime);
+    },
+    getSubwayStatus: function() {
+      return $.ajax(this.C.subwayUrl, {
+        type: "GET",
+        dataType: "xml",
+        success: (function(_this) {
+          return function(data) {
+            return _this.parseSubwayStatus(data);
+          };
+        })(this)
+      });
+    },
+    parseSubwayStatus: function(data) {
+      var line, name, status, subwayStatus, _i, _len, _ref;
+      subwayStatus = {};
+      if (!data || !$(data).length) {
+        return;
+      }
+      _ref = $(data).find("service subway line");
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        line = _ref[_i];
+        line = $(line);
+        name = line.find("name");
+        status = line.find("status");
+        if (!name.length || !status.length) {
+          continue;
+        }
+        subwayStatus[name.text()] = status.text();
+      }
+      return this.model.set({
+        subwayStatus: subwayStatus
+      });
     }
   };
 
@@ -133,12 +171,16 @@
     controller: controller,
     init: function(params) {
       console.log(params);
+      this.C = params.C;
       this.model.view = this.view;
       this.model.controller = this.controller;
+      this.model.C = params.C;
       this.view.model = this.model;
       this.view.controller = this.controller;
+      this.view.C = params.C;
       this.controller.model = this.model;
       this.controller.view = this.view;
+      this.controller.C = params.C;
       this.model.set(params);
       this.view.makeTemplates();
       if (params.version == null) {

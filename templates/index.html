@@ -9,7 +9,7 @@
 		<link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}" />
 	</head>
 	<body>
-		{% for section in params.sections %}
+		{% for section in params.C.sections %}
 			<div id="{{ section }}-wrapper"></div>
 		{% endfor %}
 
@@ -63,8 +63,20 @@
 			<% } %>
 		</script>
 
+		<script id="subway-template" type="text/template">
+			<% if (d.subwayStatus) { %>
+				<ul class="hud-section hud-section-subway">
+					<% _.each(_.keys(d.subwayStatus), function(line) { %>
+						<li>
+							<%= line %>: <%= d.subwayStatus[line] %>
+						</li>
+					<% }) %>
+				</ul>
+			<% } %>
+		</script>
+
 		<script>
-			AutoHUD.init({{ params|safe }});
+				AutoHUD.init({{ params|safe }});
 		</script>
 	</body>
 </html>
