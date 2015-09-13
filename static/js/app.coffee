@@ -20,10 +20,10 @@ view = {
 		# startup)
 		return if _.isEqual({}, @templates)
 
-		if @lastProps?
-			return if _.isEqual(@lastProps, nextProps)
-
 		for section in @model.get("sections")
+			if @lastProps? && _.isEqual(@lastProps[section], nextProps[section])
+				continue
+
 			$("##{section}-wrapper").html(
 				@templates[section]({d: nextProps})
 			)

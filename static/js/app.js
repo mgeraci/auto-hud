@@ -23,14 +23,12 @@
       if (_.isEqual({}, this.templates)) {
         return;
       }
-      if (this.lastProps != null) {
-        if (_.isEqual(this.lastProps, nextProps)) {
-          return;
-        }
-      }
       _ref = this.model.get("sections");
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         section = _ref[_i];
+        if ((this.lastProps != null) && _.isEqual(this.lastProps[section], nextProps[section])) {
+          continue;
+        }
         $("#" + section + "-wrapper").html(this.templates[section]({
           d: nextProps
         }));
