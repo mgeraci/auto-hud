@@ -1,3 +1,5 @@
+# application-wide constants. this gets passed wholesale into javascript, so
+# use 0/1 instead of True/False for bools.
 C = {
     'sections': [
         'time',
