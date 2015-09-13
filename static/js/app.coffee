@@ -106,7 +106,7 @@ controller = {
 
 		weather.today.low = @formatTemperature(today.temperatureMin)
 		weather.today.high = @formatTemperature(today.temperatureMax)
-		weather.today.summary = today.summary
+		weather.today.summary = today.summary.replace(/\.$/, "")
 		weather.today.icon = today.icon
 
 		@model.set({weather: weather})
@@ -143,9 +143,17 @@ controller = {
 			line = $(line)
 			name = line.find("name")
 			status = line.find("status")
+
+			# bail if there's a missing element
 			continue if !name.length || !status.length
 
-			subwayStatus[name.text()] = status.text()
+			name = name.text()
+			status = status.text()
+
+			# bail if we don't care about this subway line
+			continue if !@C.subwayLinesToShow[name]
+
+			subwayStatus[name] = status
 
 		@model.set({subwayStatus: subwayStatus})
 }

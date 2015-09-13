@@ -112,7 +112,7 @@
       today = data.daily.data[0];
       weather.today.low = this.formatTemperature(today.temperatureMin);
       weather.today.high = this.formatTemperature(today.temperatureMax);
-      weather.today.summary = today.summary;
+      weather.today.summary = today.summary.replace(/\.$/, "");
       weather.today.icon = today.icon;
       return this.model.set({
         weather: weather
@@ -156,7 +156,12 @@
         if (!name.length || !status.length) {
           continue;
         }
-        subwayStatus[name.text()] = status.text();
+        name = name.text();
+        status = status.text();
+        if (!this.C.subwayLinesToShow[name]) {
+          continue;
+        }
+        subwayStatus[name] = status;
       }
       return this.model.set({
         subwayStatus: subwayStatus
