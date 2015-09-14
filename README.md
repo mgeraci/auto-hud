@@ -41,6 +41,37 @@ BIRTHDAYS = {
 				}
 		]
 }
+
+# each day gets an array of chores, where each chore is a dictionary of text
+# and an optional icon
+CHORES = {
+    'Monday': [
+    ],
+    'Tuesday': [
+        {
+            'text': 'Take out recycling tonight',
+            'icon': 'recycling'
+        }
+    ],
+    'Wednesday': [
+    ],
+    'Thursday': [
+        {
+            'text': 'Take out recycling tonight',
+            'icon': 'recycling'
+        }
+        {
+            'text': 'Today is laundry day!',
+            'icon': 'laundry'
+        }
+    ],
+    'Friday': [
+    ],
+    'Saturday': [
+    ],
+    'Sunday': [
+    ],
+}
 ```
 
 ## static files

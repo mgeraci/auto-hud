@@ -4,8 +4,9 @@ C = {
     'sections': [
         'time',
         'date',
-        'birthdays',
         'weather',
+        'birthdays',
+        'chores',
         'subway',
     ],
 
@@ -44,5 +45,15 @@ C = {
         'October',
         'November',
         'December'
+    ],
+
+    'days': [
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+        'Sunday',
     ],
 }

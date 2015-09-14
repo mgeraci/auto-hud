@@ -41,6 +41,21 @@
 			<% } %>
 		</script>
 
+		<script id="chores-template" type="text/template">
+			<% if (d.chores && d.chores.length) { %>
+				<ul class="hud-section hud-section-birthdays">
+					<% _.each((d.chores), function(chore) { %>
+						<li>
+							<%= chore.text %>
+							<% if (chore.icon) { %>
+								<span class="icon <%= chore.icon %>"></span>
+							<% } %>
+						</li>
+					<% }) %>
+				</ul>
+			<% } %>
+		</script>
+
 		<script id="weather-template" type="text/template">
 			<% if (d.weather) { %>
 				<ul class="hud-section hud-section-weather">

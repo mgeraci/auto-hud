@@ -1,4 +1,6 @@
 window.AutoHUDController = {
+	useTestWeatherData: true
+
 	setWatchers: ->
 		@watchTime()
 		@watchWeather()
@@ -42,6 +44,10 @@ window.AutoHUDController = {
 		, @C.weatherPollTime)
 
 	getWeather: ->
+		if @useTestWeatherData
+			@formatWeather(weatherData)
+			return
+
 		url = "#{@C.weatherUrl}#{@model.get("forecastioApiKey")}/#{@model.get("forecastioLatLong")}"
 
 		# to use test data, comment out the `getJSON` and add:

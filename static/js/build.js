@@ -55,6 +55,7 @@ window.AutoHUD = {
 };
 
 window.AutoHUDController = {
+  useTestWeatherData: true,
   setWatchers: function() {
     this.watchTime();
     this.watchWeather();
@@ -94,6 +95,10 @@ window.AutoHUDController = {
   },
   getWeather: function() {
     var url;
+    if (this.useTestWeatherData) {
+      this.formatWeather(weatherData);
+      return;
+    }
     url = "" + this.C.weatherUrl + (this.model.get("forecastioApiKey")) + "/" + (this.model.get("forecastioLatLong"));
     return $.getJSON(url + "?callback=?", (function(_this) {
       return function(data) {

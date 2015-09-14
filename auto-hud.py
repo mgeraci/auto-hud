@@ -9,21 +9,22 @@ import requests
 # secret settings
 from localsettings import VERSION
 from localsettings import BIRTHDAYS
+from localsettings import CHORES
 from localsettings import FORECASTIO_API_KEY
 from localsettings import FORECASTIO_LAT_LONG
 
 # general settings
 from constants import C
 
-app = Flask(__name__)
 
-@app.route("/")
-def index_route(params={}):
-    today = date.today()
+# helpers
+###############################################################################
+
+def get_birthdays(today):
     today_index = (today.month, today.day)
     today_birthdays = BIRTHDAYS.get(today_index)
     year = today.year
-    birthdays = []
+    res = []
     birthday_postfixes = {
         0: "th",
         1: "st",
@@ -43,14 +44,37 @@ def index_route(params={}):
               birthday['age'] = year - birthday['year']
               birthday['postfix'] = birthday_postfixes[birthday['age'] % 10]
 
-        birthdays = today_birthdays
+        res = today_birthdays
+
+    return res
+
+def get_chores(today):
+    res = []
+    weekday = C["days"][today.weekday()]
+    weekday_chores = CHORES.get(weekday)
+
+    if weekday_chores != None:
+        res = weekday_chores
+
+    return res
+
+
+# routes
+###############################################################################
+
+app = Flask(__name__)
+
+@app.route("/")
+def index_route(params={}):
+    today = date.today()
 
     return render_template('index.html', params = {
       'version': VERSION,
       'C': C,
       'forecastioApiKey': FORECASTIO_API_KEY,
       'forecastioLatLong': FORECASTIO_LAT_LONG,
-      'birthdays': birthdays
+      'birthdays': get_birthdays(today),
+      'chores': get_chores(today)
     })
 
 @app.route("/mta-service-status")
