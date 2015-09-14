@@ -1,5 +1,5 @@
 window.AutoHUDController = {
-	useTestWeatherData: true
+	useTestWeatherData: false
 
 	setWatchers: ->
 		@watchTime()
@@ -64,26 +64,44 @@ window.AutoHUDController = {
 	formatWeather: (data) ->
 		weather = {
 			current: {}
-			today: {}
+			preview: {}
 		}
 
 		weather.current.temperature = @formatTemperature(data.currently.apparentTemperature)
 		weather.current.summary = data.currently.summary
 		weather.current.icon = data.currently.icon
 
-		today = data.daily.data[0]
+		# determine if we want to show a preview for today (if it's the morning)
+		# or tomorrow (if it's the afternoon)
+		now = new Date()
 
-		weather.today.low = @formatTemperature(today.temperatureMin)
-		weather.today.high = @formatTemperature(today.temperatureMax)
-		weather.today.summary = today.summary.replace(/\.$/, "")
-		weather.today.icon = today.icon
+		if now.getHours() < 16
+			dayIndex = 0
+		else
+			dayIndex = 1
+
+		preview = data.daily.data[dayIndex]
+		weather.preview = @formatDayWeather(preview, dayIndex)
 
 		@model.set({weather: weather})
 
 	formatTemperature: (temperature) ->
 		temperature = Math.round(temperature)
 
-		return "#{temperature}ºF"
+		return """
+			<span class="degree">#{temperature}</span>
+			<span class="degree-symbol">º</span>
+			<span class="degree-unit">F</span>
+		"""
+
+	formatDayWeather: (day, tomorrow = false)->
+		return {
+			low: @formatTemperature(day.temperatureMin)
+			high: @formatTemperature(day.temperatureMax)
+			summary: day.summary.replace(/\.$/, "")
+			icon: day.icon
+			tomorrow: tomorrow
+		}
 
 
 	# subway

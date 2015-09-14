@@ -65,13 +65,16 @@
 							<span class="hud-section-weather-icon <%= d.weather.current.icon %>"></span>
 						<% } %>
 					</li>
-					<li class="hud-section-weather-today">
-						<%= d.weather.today.low %>
+					<li class="hud-section-weather-preview">
+						<% if (d.weather.preview.tomorrow) { %>
+							Tomorrow:
+						<% } %>
+						<%= d.weather.preview.low %>
 						/
-						<%= d.weather.today.high %>
-						<%= d.weather.today.summary %>
-						<% if (d.weather.today.icon) { %>
-							<span class="hud-section-weather-icon <%= d.weather.today.icon %>"></span>
+						<%= d.weather.preview.high %>
+						<%= d.weather.preview.summary %>
+						<% if (d.weather.preview.icon) { %>
+							<span class="hud-section-weather-icon <%= d.weather.preview.icon %>"></span>
 						<% } %>
 					</li>
 				</div>

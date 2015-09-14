@@ -55,7 +55,7 @@ window.AutoHUD = {
 };
 
 window.AutoHUDController = {
-  useTestWeatherData: true,
+  useTestWeatherData: false,
   setWatchers: function() {
     this.watchTime();
     this.watchWeather();
@@ -113,26 +113,41 @@ window.AutoHUDController = {
   	today: 65º-77º, rain in the afternoon
    */
   formatWeather: function(data) {
-    var today, weather;
+    var dayIndex, now, preview, weather;
     weather = {
       current: {},
-      today: {}
+      preview: {}
     };
     weather.current.temperature = this.formatTemperature(data.currently.apparentTemperature);
     weather.current.summary = data.currently.summary;
     weather.current.icon = data.currently.icon;
-    today = data.daily.data[0];
-    weather.today.low = this.formatTemperature(today.temperatureMin);
-    weather.today.high = this.formatTemperature(today.temperatureMax);
-    weather.today.summary = today.summary.replace(/\.$/, "");
-    weather.today.icon = today.icon;
+    now = new Date();
+    if (now.getHours() < 16) {
+      dayIndex = 0;
+    } else {
+      dayIndex = 1;
+    }
+    preview = data.daily.data[dayIndex];
+    weather.preview = this.formatDayWeather(preview, dayIndex);
     return this.model.set({
       weather: weather
     });
   },
   formatTemperature: function(temperature) {
     temperature = Math.round(temperature);
-    return temperature + "ºF";
+    return "<span class=\"degree\">" + temperature + "</span>\n<span class=\"degree-symbol\">º</span>\n<span class=\"degree-unit\">F</span>";
+  },
+  formatDayWeather: function(day, tomorrow) {
+    if (tomorrow == null) {
+      tomorrow = false;
+    }
+    return {
+      low: this.formatTemperature(day.temperatureMin),
+      high: this.formatTemperature(day.temperatureMax),
+      summary: day.summary.replace(/\.$/, ""),
+      icon: day.icon,
+      tomorrow: tomorrow
+    };
   },
   watchSubwayStatus: function() {
     this.getSubwayStatus();
