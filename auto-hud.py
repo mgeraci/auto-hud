@@ -3,7 +3,7 @@ from flask import render_template
 from flask import jsonify
 from flask import request
 from flask import Response
-from datetime import date
+from datetime import datetime
 import requests
 
 # secret settings
@@ -54,7 +54,19 @@ def get_chores(today):
     weekday_chores = CHORES.get(weekday)
 
     if weekday_chores != None:
-        res = weekday_chores
+        for chore in weekday_chores:
+            time_range = chore.get("time_range")
+
+            # add this chore to the list if it either has no time range, or it
+            # has a time range and is in range
+            if time_range == None:
+                res.append(chore)
+            else:
+                if today.hour >= time_range[0] and today.hour < time_range[1]:
+                    # scrub the time_range attr from the chore, since we are
+                    # passing this to JS, which doesn't know about tuples.
+                    chore.pop("time_range", None)
+                    res.append(chore)
 
     return res
 
@@ -66,7 +78,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def index_route(params={}):
-    today = date.today()
+    today = datetime.today()
 
     return render_template('index.html', params = {
       'version': VERSION,

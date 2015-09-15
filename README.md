@@ -1,6 +1,32 @@
-# auto-hud
+# Auto-HUD
+Auto HUD is an application to power a heads up display meant for mounting behind
+a 2-way mirror. It's `auto` because bumping a version number on the server side
+will trigger a client-side refresh (so you don't have to go fetch your display
+from behind the mirror and hit "refresh").
 
-## local configuration file
+## Running the app
+The backend is written in python, with flask as the server. Dependencies are
+listed in requirements.txt. You can `pip-install` them into a fresh Python
+virtual environment.
+
+In a nutshell (assuming pip, virtualenv, and virtualenvwrapper already installed):
+
+```
+mkvirtualenv auto-hud
+workon auto-hud
+pip install -r requirements.txt
+```
+
+To start the server, run `python auto-hud.py`.
+
+## Static files
+Static file compilation is done using gulp (a node.js based build system).
+You'll need node and gulp installed, and then you can run `npm install` in the
+project root to install the gulp packages required to compile Auto-HUD's frontend
+files. Just run `gulp` in the project root to watch for Sass and CoffeeScript
+changes.
+
+## Local configuration file
 To run, Auto-HUD requires a file called `localsettings.py` in the project root.
 This file contains personal settings, like birthdays and API keys. Here is an
 example `localsettings.py` file:
@@ -42,8 +68,11 @@ BIRTHDAYS = {
 		]
 }
 
-# each day gets an array of chores, where each chore is a dictionary of text
-# and an optional icon
+# each day gets an array of chores, where each chore is a dictionary:
+# - text (str, required): description of the chore that will display
+# - icon (str, optional): if present, an icon span will print with this class
+# - time_range (tuple, optional): a start hour (inclusive) and end hour
+#     (exclusive) during which to display the chore
 CHORES = {
     'Monday': [
     ],
@@ -73,13 +102,3 @@ CHORES = {
     ],
 }
 ```
-
-## static files
-Auto-HUD's JavaScript is written in CoffeeScript, and CSS with sass. To compile
-the js, run:
-
-	coffee -wc static/js/app.coffee
-
-from the project root. To compile the css, run:
-
-	sass -wc static/css/app.sass
