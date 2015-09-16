@@ -16,7 +16,7 @@
 		<script id="time-template" type="text/template">
 			<% if (d.time) { %>
 				<h2 class="hud-section hud-section-time">
-					<%= d.time %>
+					<%= d.time.hours %>:<%= d.time.minutes %>:<%= d.time.seconds %>
 				</h2>
 			<% } %>
 		</script>

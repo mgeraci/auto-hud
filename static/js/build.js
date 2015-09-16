@@ -68,6 +68,7 @@ window.AutoHUDController = {
     return this.watchSubwayStatus();
   },
   watchTime: function() {
+    this.setTime();
     return this.timeWatcher = setInterval((function(_this) {
       return function() {
         return _this.setTime();
@@ -87,7 +88,11 @@ window.AutoHUDController = {
     }
     month = this.C.months[d.getMonth()];
     return this.model.set({
-      time: (d.getHours()) + ":" + minutes + ":" + seconds,
+      time: {
+        hours: d.getHours(),
+        minutes: minutes,
+        seconds: seconds
+      },
       date: month + " " + (d.getDate()) + ", " + (d.getFullYear())
     });
   },
@@ -119,7 +124,7 @@ window.AutoHUDController = {
   	today: 65º-77º, rain in the afternoon
    */
   formatWeather: function(data) {
-    var dayIndex, now, preview, weather;
+    var dayIndex, preview, weather;
     weather = {
       current: {},
       preview: {}
@@ -127,8 +132,7 @@ window.AutoHUDController = {
     weather.current.temperature = this.formatTemperature(data.currently.apparentTemperature);
     weather.current.summary = data.currently.summary;
     weather.current.icon = data.currently.icon;
-    now = new Date();
-    if (now.getHours() < 16) {
+    if (this.model.get("time").hours < 16) {
       dayIndex = 0;
     } else {
       dayIndex = 1;
@@ -166,7 +170,7 @@ window.AutoHUDController = {
   getSubwayStatus: function() {
     var hour;
     if ((this.C.subwayTimeRange != null) && this.C.subwayTimeRange.length === 2) {
-      hour = new Date().getHours();
+      hour = this.model.get("time").hours;
       if (hour < this.C.subwayTimeRange[0] || hour >= this.C.subwayTimeRange[1]) {
         this.model.set({
           subwayStatus: null

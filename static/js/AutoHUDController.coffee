@@ -11,6 +11,7 @@ window.AutoHUDController = {
 	#############################################################################
 
 	watchTime: ->
+		@setTime()
 		@timeWatcher = setInterval(=>
 			@setTime()
 		, 1000)
@@ -29,7 +30,11 @@ window.AutoHUDController = {
 		month = @C.months[d.getMonth()]
 
 		@model.set({
-			time: "#{d.getHours()}:#{minutes}:#{seconds}"
+			time: {
+				hours: d.getHours()
+				minutes: minutes
+				seconds: seconds
+			}
 			date: "#{month} #{d.getDate()}, #{d.getFullYear()}"
 		})
 
@@ -73,9 +78,7 @@ window.AutoHUDController = {
 
 		# determine if we want to show a preview for today (if it's the morning)
 		# or tomorrow (if it's the afternoon)
-		now = new Date()
-
-		if now.getHours() < 16
+		if @model.get("time").hours < 16
 			dayIndex = 0
 		else
 			dayIndex = 1
@@ -115,7 +118,7 @@ window.AutoHUDController = {
 
 	getSubwayStatus: ->
 		if @C.subwayTimeRange? && @C.subwayTimeRange.length == 2
-			hour = new Date().getHours()
+			hour = @model.get("time").hours
 
 			if hour < @C.subwayTimeRange[0] || hour >= @C.subwayTimeRange[1]
 				@model.set({subwayStatus: null})
