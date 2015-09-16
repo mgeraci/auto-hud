@@ -114,6 +114,13 @@ window.AutoHUDController = {
 		, @C.subwayPollTime)
 
 	getSubwayStatus: ->
+		if @C.subwayTimeRange? && @C.subwayTimeRange.length == 2
+			hour = new Date().getHours()
+
+			if hour < @C.subwayTimeRange[0] || hour >= @C.subwayTimeRange[1]
+				@model.set({subwayStatus: null})
+				return
+
 		$.ajax(@C.subwayUrl, {
 			type: "GET"
 			dataType: "xml"

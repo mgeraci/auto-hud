@@ -34,12 +34,18 @@ window.AutoHUD = {
       type: "GET",
       success: (function(_this) {
         return function(data) {
-          return _this.parseVersion(data);
+          _this.parseVersion(data);
+          return _this.model.set({
+            noConnection: false
+          });
         };
       })(this),
       error: (function(_this) {
         return function() {
-          return console.log("no response from the version watcher; the server must be down.");
+          console.log("no response from the version watcher; the server must be down.");
+          return _this.model.set({
+            noConnection: true
+          });
         };
       })(this)
     });
@@ -158,6 +164,16 @@ window.AutoHUDController = {
     })(this), this.C.subwayPollTime);
   },
   getSubwayStatus: function() {
+    var hour;
+    if ((this.C.subwayTimeRange != null) && this.C.subwayTimeRange.length === 2) {
+      hour = new Date().getHours();
+      if (hour < this.C.subwayTimeRange[0] || hour >= this.C.subwayTimeRange[1]) {
+        this.model.set({
+          subwayStatus: null
+        });
+        return;
+      }
+    }
     return $.ajax(this.C.subwayUrl, {
       type: "GET",
       dataType: "xml",

@@ -8,6 +8,7 @@ C = {
         'birthdays',
         'chores',
         'subway',
+        'noConnection',
     ],
 
     'weatherPollTime': 1000 * 60 * 5,
@@ -31,6 +32,8 @@ C = {
         'S':    0,
         'SIR':  0,
     },
+
+    'subwayTimeRange': [5, 13],
 
     'months': [
         'January',
