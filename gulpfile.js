@@ -1,4 +1,5 @@
 var gulp = require("gulp");
+var plumber = require("gulp-plumber");
 var concat = require("gulp-concat");
 var util = require("gulp-util");
 var sass = require("gulp-ruby-sass");
@@ -26,6 +27,7 @@ gulp.task("compileSass", function() {
 
 gulp.task("compileCoffee", function() {
 	return gulp.src(jsFiles)
+		.pipe(plumber())
 		.pipe(
 			coffee({bare: true}).on('error', util.log)
 		)
