@@ -65,7 +65,7 @@ window.AutoHUDController = {
   setWatchers: function() {
     this.watchTime();
     this.watchWeather();
-    return this.watchSubwayStatus();
+    return this.watchSubway();
   },
   watchTime: function() {
     this.setTime();
@@ -88,6 +88,7 @@ window.AutoHUDController = {
     }
     month = this.C.months[d.getMonth()];
     return this.model.set({
+      dateObj: d,
       time: {
         hours: d.getHours(),
         minutes: minutes,
@@ -159,7 +160,7 @@ window.AutoHUDController = {
       tomorrow: tomorrow
     };
   },
-  watchSubwayStatus: function() {
+  watchSubway: function() {
     this.getSubwayStatus();
     return setInterval((function(_this) {
       return function() {
@@ -168,7 +169,13 @@ window.AutoHUDController = {
     })(this), this.C.subwayPollTime);
   },
   getSubwayStatus: function() {
-    var hour;
+    var day, hour;
+    if (this.C.subwayDayRange != null) {
+      day = this.C.days[this.model.get("dateObj").getDay()];
+      if (this.C.subwayDayRange.indexOf(day) < 0) {
+        return;
+      }
+    }
     if ((this.C.subwayTimeRange != null) && this.C.subwayTimeRange.length === 2) {
       hour = this.model.get("time").hours;
       if (hour < this.C.subwayTimeRange[0] || hour >= this.C.subwayTimeRange[1]) {

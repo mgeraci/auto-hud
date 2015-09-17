@@ -4,7 +4,7 @@ window.AutoHUDController = {
 	setWatchers: ->
 		@watchTime()
 		@watchWeather()
-		@watchSubwayStatus()
+		@watchSubway()
 
 
 	# time and date
@@ -30,6 +30,7 @@ window.AutoHUDController = {
 		month = @C.months[d.getMonth()]
 
 		@model.set({
+			dateObj: d
 			time: {
 				hours: d.getHours()
 				minutes: minutes
@@ -110,13 +111,21 @@ window.AutoHUDController = {
 	# subway
 	#############################################################################
 
-	watchSubwayStatus: ->
+	watchSubway: ->
 		@getSubwayStatus()
 		setInterval(=>
 			@getSubwayStatus()
 		, @C.subwayPollTime)
 
 	getSubwayStatus: ->
+		# if the constants have a subway day range, check that we qualify
+		if @C.subwayDayRange?
+			day = @C.days[@model.get("dateObj").getDay()]
+
+			if @C.subwayDayRange.indexOf(day) < 0
+				return
+
+		# if the constants have a subway time range, check that we qualify
 		if @C.subwayTimeRange? && @C.subwayTimeRange.length == 2
 			hour = @model.get("time").hours
 

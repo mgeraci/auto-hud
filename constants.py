@@ -34,6 +34,13 @@ C = {
     },
 
     'subwayTimeRange': [5, 13],
+    'subwayDayRange': [
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+    ],
 
     'months': [
         'January',

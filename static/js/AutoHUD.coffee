@@ -24,6 +24,7 @@ window.AutoHUD = {
 		# send data to the model
 		@model.set(params)
 
+		# initialize the underscore templates
 		@view.makeTemplates()
 
 		# set the current version on the sigleton. if it's missing, refresh.
