@@ -1,4 +1,4 @@
-# Auto-HUD
+# Auto HUD
 Auto HUD is an application to power a heads up display meant for mounting behind
 a 2-way mirror. It's `auto` because bumping a version number on the server will
 trigger a client-side refresh (so you don't have to go fetch your display from
@@ -27,10 +27,17 @@ node and gulp installed, and then you can run `npm install` in the project root
 to install the packages required to compile Auto-HUD's frontend files. Just run
 `gulp` in the project root to watch for Sass and CoffeeScript changes.
 
-## Local configuration file
-To run, Auto-HUD requires a file called `localsettings.py` in the project root.
-This file contains "secret" settings, like birthdays and API keys. Here is an
-example `localsettings.py` file:
+## Configuration
+Auto HUD requires two configuration files in the project root to run,
+`constants.py` and `localsettings.py`. Constants contains sitewide settings,
+like the order of modules. Localsettings contains personal sitewide settings,
+like api keys and birthdays.
+
+### constants.py
+TODO add documentation
+
+### localsettings.py
+Here is an example `localsettings.py` file:
 
 ```.py
 # change this number to trigger the client to reload. use if you want to hot
@@ -85,7 +92,7 @@ CHORES = {
         {
             'text': 'Take out recycling tonight',
             'icon': 'recycling'
-        }
+        },
         {
             'text': 'Today is laundry day!',
             'icon': 'laundry'
