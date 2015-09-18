@@ -40,7 +40,7 @@
 					<li class="hud-section-weather-current">
 						<%= d.weather.current.temperature %>, <%= d.weather.current.summary %>
 						<% if (d.weather.current.icon) { %>
-							<span class="hud-section-weather-icon <%= d.weather.current.icon %>"></span>
+							<span class="wi wi-forecast-io-<%= d.weather.current.icon %>"></span>
 						<% } %>
 					</li>
 					<li class="hud-section-weather-preview">
@@ -55,7 +55,7 @@
 						<% } %>
 						<%= d.weather.preview.summary %>
 						<% if (d.weather.preview.icon) { %>
-							<span class="hud-section-weather-icon <%= d.weather.preview.icon %>"></span>
+							<span class="wi wi-forecast-io-<%= d.weather.preview.icon %>"></span>
 						<% } %>
 					</li>
 				</div>
