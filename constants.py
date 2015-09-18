@@ -33,7 +33,7 @@ C = {
         'SIR':  0,
     },
 
-    'subwayTimeRange': [5, 13],
+    # what days you'd like to see subway status
     'subwayDayRange': [
         'Monday',
         'Tuesday',
@@ -41,6 +41,9 @@ C = {
         'Thursday',
         'Friday',
     ],
+
+    # a time range during which to display subway status
+    'subwayTimeRange': [5, 13],
 
     'months': [
         'January',
