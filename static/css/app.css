@@ -82,13 +82,14 @@ body {
   font-size: 57%;
   font-family: arial; }
 .hud-section-time h2 {
+  margin-top: 10px;
   color: #aaa;
   font-size: 30px; }
 
 .hud-section-weather .degree-symbol {
   margin-left: -0.2em; }
 .hud-section-weather .hud-section-weather-current {
-  font-size: 40px; }
+  font-size: 50px; }
 
 .hud-section-subway .hud-section-subway-line {
   display: inline-block;
@@ -102,3 +103,6 @@ body {
   line-height: 1.5em; }
 .hud-section-subway .hud-section-subway-status {
   text-transform: lowercase; }
+
+.hud-section-no-connection {
+  font-size: 20px; }

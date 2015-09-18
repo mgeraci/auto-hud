@@ -5,8 +5,9 @@ $background: #000
 $text-color-primary: #fff
 $text-color-secondary: #aaa
 $text-size-primary: 70px
-$text-size-secondary: 40px
+$text-size-secondary: 50px
 $text-size-tertiary: 30px
+$text-size-quartiary: 20px
 
 $gutter: 50px
 
@@ -56,6 +57,7 @@ body
     font-family: arial
 
   h2
+    margin-top: $gutter / 5
     color: $text-color-secondary
     font-size: $text-size-tertiary
 
@@ -81,3 +83,6 @@ body
 
   .hud-section-subway-status
     text-transform: lowercase
+
+.hud-section-no-connection
+  font-size: $text-size-quartiary
