@@ -10,22 +10,55 @@
 	</head>
 	<body>
 		{% for section in params.C.sections %}
-			<div id="{{ section }}-wrapper"></div>
+			<div id="{{ section }}-wrapper" class="section-wrapper"></div>
 		{% endfor %}
 
 		<script id="time-template" type="text/template">
-			<% if (d.time) { %>
-				<h2 class="hud-section hud-section-time">
-					<%= d.time.hours %>:<%= d.time.minutes %>:<%= d.time.seconds %>
-				</h2>
+			<% if (d.time || d.date) { %>
+				<div class="hud-section hud-section-time">
+					<% if (d.time) { %>
+						<h1>
+							<%= d.time.hours %>
+							<span class="colon">:</span>
+							<%= d.time.minutes %>
+							<span class="colon">:</span>
+							<%= d.time.seconds %>
+						</h1>
+					<% } %>
+					<% if (d.date) { %>
+						<h2>
+							<%= d.date.month %> <%= d.date.day %>, <%= d.date.year %>
+						</h2>
+					<% } %>
+				</div>
 			<% } %>
 		</script>
 
-		<script id="date-template" type="text/template">
-			<% if (d.date) { %>
-				<h3 class="hud-section hud-section-date">
-					<%= d.date.month %> <%= d.date.day %>, <%= d.date.year %>
-				</h3>
+		<script id="weather-template" type="text/template">
+			<% if (d.weather) { %>
+				<ul class="hud-section hud-section-weather">
+					<li class="hud-section-weather-current">
+						<%= d.weather.current.temperature %>, <%= d.weather.current.summary %>
+						<% if (d.weather.current.icon) { %>
+							<span class="hud-section-weather-icon <%= d.weather.current.icon %>"></span>
+						<% } %>
+					</li>
+					<li class="hud-section-weather-preview">
+						<% if (d.weather.preview.tomorrow) { %>
+							Tomorrow:
+						<% } %>
+						<%= d.weather.preview.low %>
+						/
+						<%= d.weather.preview.high %>
+						<% if (d.weather.preview.tomorrow) { %>
+							<br />
+						<% } %>
+						<%= d.weather.preview.summary %>
+						<% if (d.weather.preview.icon) { %>
+							<span class="hud-section-weather-icon <%= d.weather.preview.icon %>"></span>
+						<% } %>
+					</li>
+				</div>
 			<% } %>
 		</script>
 
@@ -53,31 +86,6 @@
 						</li>
 					<% }) %>
 				</ul>
-			<% } %>
-		</script>
-
-		<script id="weather-template" type="text/template">
-			<% if (d.weather) { %>
-				<ul class="hud-section hud-section-weather">
-					<li class="hud-section-weather-current">
-						<%= d.weather.current.temperature %>, <%= d.weather.current.summary %>
-						<% if (d.weather.current.icon) { %>
-							<span class="hud-section-weather-icon <%= d.weather.current.icon %>"></span>
-						<% } %>
-					</li>
-					<li class="hud-section-weather-preview">
-						<% if (d.weather.preview.tomorrow) { %>
-							Tomorrow:
-						<% } %>
-						<%= d.weather.preview.low %>
-						/
-						<%= d.weather.preview.high %>
-						<%= d.weather.preview.summary %>
-						<% if (d.weather.preview.icon) { %>
-							<span class="hud-section-weather-icon <%= d.weather.preview.icon %>"></span>
-						<% } %>
-					</li>
-				</div>
 			<% } %>
 		</script>
 

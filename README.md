@@ -42,7 +42,6 @@ are:
 # list your modules here. the order determines the display.
 'sections': [
 		'time',
-		'date',
 		'weather',
 		'birthdays',
 		'chores',

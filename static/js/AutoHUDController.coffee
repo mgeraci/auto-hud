@@ -98,7 +98,6 @@ window.AutoHUDController = {
 		return """
 			<span class="degree">#{temperature}</span>
 			<span class="degree-symbol">º</span>
-			<span class="degree-unit">F</span>
 		"""
 
 	formatDayWeather: (day, tomorrow = false)->

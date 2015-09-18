@@ -149,7 +149,7 @@ window.AutoHUDController = {
   },
   formatTemperature: function(temperature) {
     temperature = Math.round(temperature);
-    return "<span class=\"degree\">" + temperature + "</span>\n<span class=\"degree-symbol\">º</span>\n<span class=\"degree-unit\">F</span>";
+    return "<span class=\"degree\">" + temperature + "</span>\n<span class=\"degree-symbol\">º</span>";
   },
   formatDayWeather: function(day, tomorrow) {
     if (tomorrow == null) {

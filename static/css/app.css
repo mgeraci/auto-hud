@@ -47,4 +47,42 @@ table {
 
 body {
   padding: 50px;
-  background: lightgray; }
+  background: #000;
+  color: #aaa;
+  font-family: helvetica neue, helvetica, arial, sans-serif;
+  font-size: 30px;
+  font-weight: 100;
+  letter-spacing: 1.2px;
+  line-height: 1.2px; }
+
+.section-wrapper {
+  float: right;
+  clear: both;
+  text-align: right; }
+  .section-wrapper .hud-section {
+    margin-top: 50px; }
+  .section-wrapper:first-child .hud-section {
+    margin-top: 0; }
+  .section-wrapper li {
+    margin-top: 25px; }
+    .section-wrapper li:first-child {
+      margin-top: 0; }
+
+.hud-section-time h1 {
+  color: #fff;
+  font-size: 70px;
+  letter-spacing: 0.5px; }
+.hud-section-time .colon {
+  position: relative;
+  bottom: 0.3em;
+  margin: 0 -0.35em;
+  font-size: 57%;
+  font-family: arial; }
+.hud-section-time h2 {
+  color: #aaa;
+  font-size: 30px; }
+
+.hud-section-weather .degree-symbol {
+  margin-left: -0.2em; }
+.hud-section-weather .hud-section-weather-current {
+  font-size: 40px; }

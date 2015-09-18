@@ -3,7 +3,6 @@
 C = {
     'sections': [
         'time',
-        'date',
         'weather',
         'birthdays',
         'chores',

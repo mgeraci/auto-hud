@@ -1,6 +1,64 @@
 @import "bourbon/bourbon"
 @import "reset"
 
+$background: #000
+$text-color-primary: #fff
+$text-color-secondary: #aaa
+$text-size-primary: 70px
+$text-size-secondary: 40px
+$text-size-tertiary: 30px
+
+$gutter: 50px
+
 body
-  padding: 50px
-  background: lightgray
+  padding: $gutter
+  background: $background
+  color: $text-color-secondary
+  font-family: helvetica neue, helvetica, arial, sans-serif
+  font-size: $text-size-tertiary
+  font-weight: 100
+  letter-spacing: 1.2px
+  line-height: 1.2px
+
+.section-wrapper
+  float: right
+  clear: both
+  text-align: right
+
+  .hud-section
+    margin-top: $gutter
+
+  &:first-child
+    .hud-section
+      margin-top: 0
+
+  // internal spacing
+  li
+    margin-top: $gutter / 2
+
+    &:first-child
+      margin-top: 0
+
+.hud-section-time
+  h1
+    color: $text-color-primary
+    font-size: $text-size-primary
+    letter-spacing: 0.5px
+
+  .colon
+    position: relative
+    bottom: 0.3em
+    margin: 0 -0.35em
+    font-size: 57%
+    font-family: arial
+
+  h2
+    color: $text-color-secondary
+    font-size: $text-size-tertiary
+
+.hud-section-weather
+  .degree-symbol
+    margin-left: -0.2em
+
+  .hud-section-weather-current
+    font-size: $text-size-secondary
