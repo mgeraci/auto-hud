@@ -88,13 +88,16 @@ window.AutoHUDController = {
     }
     month = this.C.months[d.getMonth()];
     return this.model.set({
-      dateObj: d,
       time: {
         hours: d.getHours(),
         minutes: minutes,
         seconds: seconds
       },
-      date: month + " " + (d.getDate()) + ", " + (d.getFullYear())
+      date: {
+        month: month,
+        day: d.getDate(),
+        year: d.getFullYear()
+      }
     });
   },
   watchWeather: function() {

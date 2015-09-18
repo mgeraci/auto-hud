@@ -30,13 +30,16 @@ window.AutoHUDController = {
 		month = @C.months[d.getMonth()]
 
 		@model.set({
-			dateObj: d
 			time: {
 				hours: d.getHours()
 				minutes: minutes
 				seconds: seconds
 			}
-			date: "#{month} #{d.getDate()}, #{d.getFullYear()}"
+			date: {
+				month: month
+				day: d.getDate()
+				year: d.getFullYear()
+			}
 		})
 
 
