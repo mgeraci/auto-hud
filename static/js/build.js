@@ -68,14 +68,14 @@ window.AutoHUDController = {
     return this.watchSubway();
   },
   watchTime: function() {
-    this.setTime();
+    this.getTime();
     return this.timeWatcher = setInterval((function(_this) {
       return function() {
-        return _this.setTime();
+        return _this.getTime();
       };
     })(this), 1000);
   },
-  setTime: function() {
+  getTime: function() {
     var d, minutes, month, seconds;
     d = new Date();
     minutes = d.getMinutes();

@@ -11,12 +11,12 @@ window.AutoHUDController = {
 	#############################################################################
 
 	watchTime: ->
-		@setTime()
+		@getTime()
 		@timeWatcher = setInterval(=>
-			@setTime()
+			@getTime()
 		, 1000)
 
-	setTime: ->
+	getTime: ->
 		d = new Date()
 
 		minutes = d.getMinutes()
