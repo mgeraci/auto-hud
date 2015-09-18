@@ -108,10 +108,12 @@
 			<% if (d.noConnection) { %>
 				<div class="hud-section hud-section-no-connection">
 					no connection
-					<span class="icon alert"></span>
+					<span class="fa fa-exclamation-triangle"></span>
 				</div>
 			<% } %>
 		</script>
+
+		<div id="fa-trigger" class="fa fa-battery-full"></div>
 
 		<script>
 			AutoHUD.init({{ params|safe }});

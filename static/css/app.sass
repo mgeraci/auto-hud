@@ -1,4 +1,5 @@
 @import "bourbon/bourbon"
+@import "font-awesome/font-awesome"
 @import "reset"
 
 $background: #000
@@ -86,3 +87,10 @@ body
 
 .hud-section-no-connection
   font-size: $text-size-quartiary
+
+// here's a little hack, but we want to add a font-awesome icon at the very
+// start, to trigger the fonts to download at the beginning (in case the
+// server goes down before we actually need to use on
+#fa-trigger
+  font-size: 1px
+  opacity: 0
