@@ -3,7 +3,7 @@ window.AutoHUDModel = {
 
 	set: (props) ->
 		$.extend(true, @data, props)
-		AutoHUD.view.render(@getAll())
+		AutoHUD.view.render()
 
 	get: (prop)->
 		return @data[prop]

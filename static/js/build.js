@@ -133,7 +133,7 @@ window.AutoHUDController = {
     weather.current.temperature = this.formatTemperature(data.currently.apparentTemperature);
     weather.current.summary = data.currently.summary;
     weather.current.icon = data.currently.icon;
-    if (this.model.get("time").hours < 16) {
+    if (new Date().getHours() < 16) {
       dayIndex = 0;
     } else {
       dayIndex = 1;
@@ -169,18 +169,19 @@ window.AutoHUDController = {
     })(this), this.C.subwayPollTime);
   },
   getSubwayStatus: function() {
-    var day, hour;
+    var d, day, hour;
+    d = new Date();
     if (this.C.subwayDayRange != null) {
-      day = this.C.days[this.model.get("dateObj").getDay()];
+      day = this.C.daysJs[d.getDay()];
       if (this.C.subwayDayRange.indexOf(day) < 0) {
         return;
       }
     }
     if ((this.C.subwayTimeRange != null) && this.C.subwayTimeRange.length === 2) {
-      hour = this.model.get("time").hours;
+      hour = d.getHours();
       if (hour < this.C.subwayTimeRange[0] || hour >= this.C.subwayTimeRange[1]) {
         this.model.set({
-          subwayStatus: null
+          subway: null
         });
         return;
       }
@@ -218,7 +219,7 @@ window.AutoHUDController = {
       subwayStatus[name] = status;
     }
     return this.model.set({
-      subwayStatus: subwayStatus
+      subway: subwayStatus
     });
   }
 };
@@ -227,7 +228,7 @@ window.AutoHUDModel = {
   data: {},
   set: function(props) {
     $.extend(true, this.data, props);
-    return AutoHUD.view.render(this.getAll());
+    return AutoHUD.view.render();
   },
   get: function(prop) {
     return this.data[prop];
@@ -239,15 +240,21 @@ window.AutoHUDModel = {
 
 window.AutoHUDView = {
   templates: {},
-  render: function(nextProps) {
-    var i, len, ref, section;
+  render: function() {
+    var hasLastProps, hasNextProps, i, len, nextProps, ref, ref1, section;
+    nextProps = this.model.getAll();
+    if (nextProps == null) {
+      return;
+    }
     if (_.isEqual({}, this.templates)) {
       return;
     }
     ref = this.C.sections;
     for (i = 0, len = ref.length; i < len; i++) {
       section = ref[i];
-      if ((this.lastProps != null) && _.isEqual(this.lastProps[section], nextProps[section])) {
+      hasLastProps = ((ref1 = this.lastProps) != null ? ref1[section] : void 0) != null;
+      hasNextProps = (nextProps != null ? nextProps[section] : void 0) != null;
+      if (hasLastProps && hasNextProps && _.isEqual(this.lastProps[section], nextProps[section])) {
         continue;
       }
       $("#" + section + "-wrapper").html(this.templates[section]({

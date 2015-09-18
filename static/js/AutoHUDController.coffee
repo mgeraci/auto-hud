@@ -79,7 +79,7 @@ window.AutoHUDController = {
 
 		# determine if we want to show a preview for today (if it's the morning)
 		# or tomorrow (if it's the afternoon)
-		if @model.get("time").hours < 16
+		if new Date().getHours() < 16
 			dayIndex = 0
 		else
 			dayIndex = 1
@@ -118,19 +118,21 @@ window.AutoHUDController = {
 		, @C.subwayPollTime)
 
 	getSubwayStatus: ->
+		d = new Date()
+
 		# if the constants have a subway day range, check that we qualify
 		if @C.subwayDayRange?
-			day = @C.days[@model.get("dateObj").getDay()]
+			day = @C.daysJs[d.getDay()]
 
 			if @C.subwayDayRange.indexOf(day) < 0
 				return
 
 		# if the constants have a subway time range, check that we qualify
 		if @C.subwayTimeRange? && @C.subwayTimeRange.length == 2
-			hour = @model.get("time").hours
+			hour = d.getHours()
 
 			if hour < @C.subwayTimeRange[0] || hour >= @C.subwayTimeRange[1]
-				@model.set({subwayStatus: null})
+				@model.set({subway: null})
 				return
 
 		$.ajax(@C.subwayUrl, {
@@ -161,5 +163,5 @@ window.AutoHUDController = {
 
 			subwayStatus[name] = status
 
-		@model.set({subwayStatus: subwayStatus})
+		@model.set({subway: subwayStatus})
 }

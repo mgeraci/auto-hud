@@ -50,7 +50,7 @@ def get_birthdays(today):
 
 def get_chores(today):
     res = []
-    weekday = C["days"][today.weekday()]
+    weekday = C["daysPy"][today.weekday()]
     weekday_chores = CHORES.get(weekday)
 
     if weekday_chores != None:

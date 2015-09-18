@@ -82,11 +82,11 @@
 		</script>
 
 		<script id="subway-template" type="text/template">
-			<% if (d.subwayStatus) { %>
+			<% if (d.subway) { %>
 				<ul class="hud-section hud-section-subway">
-					<% _.each(_.keys(d.subwayStatus), function(line) { %>
+					<% _.each(_.keys(d.subway), function(line) { %>
 						<li>
-							<%= line %>: <%= d.subwayStatus[line] %>
+							<%= line %>: <%= d.subway[line] %>
 						</li>
 					<% }) %>
 				</ul>

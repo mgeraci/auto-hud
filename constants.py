@@ -57,7 +57,7 @@ C = {
         'December'
     ],
 
-    'days': [
+    'daysPy': [
         'Monday',
         'Tuesday',
         'Wednesday',
@@ -65,5 +65,15 @@ C = {
         'Friday',
         'Saturday',
         'Sunday',
+    ],
+
+    'daysJs': [
+        'Sunday',
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
     ],
 }

@@ -1,13 +1,20 @@
 window.AutoHUDView = {
 	templates: {}
 
-	render: (nextProps) ->
+	# render each section, unless it hasn't changed
+	render: ->
+		nextProps = @model.getAll()
+		return if !nextProps?
+
 		# bail if we haven't initialized the templates yet (race condition on
 		# startup)
 		return if _.isEqual({}, @templates)
 
 		for section in @C.sections
-			if @lastProps? && _.isEqual(@lastProps[section], nextProps[section])
+			hasLastProps = @lastProps?[section]?
+			hasNextProps = nextProps?[section]?
+
+			if hasLastProps && hasNextProps && _.isEqual(@lastProps[section], nextProps[section])
 				continue
 
 			$("##{section}-wrapper").html(
