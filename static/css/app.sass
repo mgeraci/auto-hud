@@ -18,7 +18,7 @@ body
   font-size: $text-size-tertiary
   font-weight: 100
   letter-spacing: 1.2px
-  line-height: 1.2px
+  line-height: 1.2em
 
 .section-wrapper
   float: right
@@ -34,6 +34,9 @@ body
 
   // internal spacing
   li
+    float: left
+    clear: both
+    width: 100%
     margin-top: $gutter / 2
 
     &:first-child
@@ -62,3 +65,19 @@ body
 
   .hud-section-weather-current
     font-size: $text-size-secondary
+
+.hud-section-subway
+  .hud-section-subway-line
+    display: inline-block
+    width: $text-size-tertiary
+    height: $text-size-tertiary
+    margin-left: 0.3em
+
+    border: 2px solid $text-color-secondary
+    border-radius: 50%
+    text-align: center
+    font-size: 0.7em
+    line-height: 1.5em
+
+  .hud-section-subway-status
+    text-transform: lowercase

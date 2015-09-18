@@ -42,7 +42,7 @@ C = {
     ],
 
     # a time range during which to display subway status
-    'subwayTimeRange': [5, 13],
+    'subwayTimeRange': [4, 13],
 
     'months': [
         'January',

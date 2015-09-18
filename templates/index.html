@@ -94,7 +94,10 @@
 				<ul class="hud-section hud-section-subway">
 					<% _.each(_.keys(d.subway), function(line) { %>
 						<li>
-							<%= line %>: <%= d.subway[line] %>
+							<%= d.subway[line].lines %>
+							<span class="hud-section-subway-status">
+								<%= d.subway[line].status %>
+							</span>
 						</li>
 					<% }) %>
 				</ul>

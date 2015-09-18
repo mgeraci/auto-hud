@@ -163,7 +163,20 @@ window.AutoHUDController = {
 			# bail if we don't care about this subway line
 			continue if !@C.subwayLinesToShow[name]
 
-			subwayStatus[name] = status
+			subwayStatus[name] = {
+				lines: @formatLines(name)
+				status: status
+			}
 
 		@model.set({subway: subwayStatus})
+
+	formatLines: (lines) ->
+		res = []
+
+		for line in lines.split("")
+			res.push("""
+				<span class="hud-section-subway-line">#{line}</span>
+			""")
+
+		return res.join("")
 }

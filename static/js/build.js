@@ -219,11 +219,24 @@ window.AutoHUDController = {
       if (!this.C.subwayLinesToShow[name]) {
         continue;
       }
-      subwayStatus[name] = status;
+      subwayStatus[name] = {
+        lines: this.formatLines(name),
+        status: status
+      };
     }
     return this.model.set({
       subway: subwayStatus
     });
+  },
+  formatLines: function(lines) {
+    var i, len, line, ref, res;
+    res = [];
+    ref = lines.split("");
+    for (i = 0, len = ref.length; i < len; i++) {
+      line = ref[i];
+      res.push("<span class=\"hud-section-subway-line\">" + line + "</span>");
+    }
+    return res.join("");
   }
 };
 
