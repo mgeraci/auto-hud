@@ -16,26 +16,42 @@ from localsettings import FORECASTIO_LAT_LONG
 # general settings
 from constants import C
 
+app = Flask(__name__)
 
-# helpers
-###############################################################################
+@app.route('/')
+def index_route(params={}):
+    today = datetime.today()
 
-def get_birthdays(today):
+    return render_template('index.html', params = {
+      'version': VERSION,
+      'C': C,
+      'forecastioApiKey': FORECASTIO_API_KEY,
+      'forecastioLatLong': FORECASTIO_LAT_LONG,
+    })
+
+@app.route('/mta-service-status')
+def mta_service_status():
+    r = requests.get(C['subwayRemoteUrl'])
+    return Response(r.text, mimetype='text/xml')
+
+@app.route('/birthdays')
+def birthdays():
+    today = datetime.today()
     today_index = (today.month, today.day)
     today_birthdays = BIRTHDAYS.get(today_index)
     year = today.year
     res = []
     birthday_postfixes = {
-        0: "th",
-        1: "st",
-        2: "nd",
-        3: "rd",
-        4: "th",
-        5: "th",
-        6: "th",
-        7: "th",
-        8: "th",
-        9: "th",
+        0: 'th',
+        1: 'st',
+        2: 'nd',
+        3: 'rd',
+        4: 'th',
+        5: 'th',
+        6: 'th',
+        7: 'th',
+        8: 'th',
+        9: 'th',
     }
 
     if today_birthdays != None:
@@ -46,16 +62,20 @@ def get_birthdays(today):
 
         res = today_birthdays
 
-    return res
+    return jsonify({
+        'birthdays': res
+    })
 
-def get_chores(today):
+@app.route('/chores')
+def chores():
+    today = datetime.today()
     res = []
-    weekday = C["daysPy"][today.weekday()]
+    weekday = C['daysPy'][today.weekday()]
     weekday_chores = CHORES.get(weekday)
 
     if weekday_chores != None:
         for chore in weekday_chores:
-            time_range = chore.get("time_range")
+            time_range = chore.get('time_range')
 
             # add this chore to the list if it either has no time range, or it
             # has a time range and is in range
@@ -65,41 +85,18 @@ def get_chores(today):
                 if today.hour >= time_range[0] and today.hour < time_range[1]:
                     # scrub the time_range attr from the chore, since we are
                     # passing this to JS, which doesn't know about tuples.
-                    chore.pop("time_range", None)
+                    chore.pop('time_range', None)
                     res.append(chore)
 
-    return res
-
-
-# routes
-###############################################################################
-
-app = Flask(__name__)
-
-@app.route("/")
-def index_route(params={}):
-    today = datetime.today()
-
-    return render_template('index.html', params = {
-      'version': VERSION,
-      'C': C,
-      'forecastioApiKey': FORECASTIO_API_KEY,
-      'forecastioLatLong': FORECASTIO_LAT_LONG,
-      'birthdays': get_birthdays(today),
-      'chores': get_chores(today)
+    return jsonify({
+        'chores': res
     })
 
-@app.route("/mta-service-status")
-def mta_service_status():
-    r = requests.get(C['subwayRemoteUrl'])
-    return Response(r.text, mimetype='text/xml')
-
-@app.route("/version")
+@app.route('/version')
 def version_route():
-    data = {}
-    data["version"] = VERSION
+    return jsonify({
+        'version': VERSION
+    })
 
-    return jsonify(data)
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(debug=True)

@@ -2984,6 +2984,7 @@ body {
 .hud-section-no-connection {
   font-size: 20px; }
 
-#fa-trigger {
+#fa-trigger,
+#wi-trigger {
   font-size: 1px;
   opacity: 0; }

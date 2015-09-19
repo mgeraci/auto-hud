@@ -42,7 +42,6 @@ window.AutoHUD = {
       })(this),
       error: (function(_this) {
         return function() {
-          console.log("no response from the version watcher; the server must be down.");
           return _this.model.set({
             noConnection: true
           });
@@ -64,6 +63,8 @@ window.AutoHUDController = {
   useTestWeatherData: false,
   setWatchers: function() {
     this.watchTime();
+    this.watchBirthdays();
+    this.watchChores();
     this.watchWeather();
     return this.watchSubway();
   },
@@ -98,6 +99,42 @@ window.AutoHUDController = {
         day: d.getDate(),
         year: d.getFullYear()
       }
+    });
+  },
+  watchBirthdays: function() {
+    this.getBirthdays();
+    return setInterval((function(_this) {
+      return function() {
+        return _this.getBirthdays();
+      };
+    })(this), this.C.birthdaysPollTime);
+  },
+  getBirthdays: function() {
+    return $.ajax("/birthdays", {
+      type: "GET",
+      success: (function(_this) {
+        return function(data) {
+          return _this.model.set(data);
+        };
+      })(this)
+    });
+  },
+  watchChores: function() {
+    this.getChores();
+    return setInterval((function(_this) {
+      return function() {
+        return _this.getChores();
+      };
+    })(this), this.C.choresPollTime);
+  },
+  getChores: function() {
+    return $.ajax("/chores", {
+      type: "GET",
+      success: (function(_this) {
+        return function(data) {
+          return _this.model.set(data);
+        };
+      })(this)
     });
   },
   watchWeather: function() {
@@ -240,10 +277,17 @@ window.AutoHUDController = {
   }
 };
 
+var hasProp = {}.hasOwnProperty;
+
 window.AutoHUDModel = {
   data: {},
   set: function(props) {
-    $.extend(true, this.data, props);
+    var key, value;
+    for (key in props) {
+      if (!hasProp.call(props, key)) continue;
+      value = props[key];
+      this.data[key] = value;
+    }
     return AutoHUD.view.render();
   },
   get: function(prop) {

@@ -13,6 +13,12 @@ C = {
     'weatherPollTime': 1000 * 60 * 5,
     'weatherUrl': 'https://api.forecast.io/forecast/',
 
+    'birthdaysPollTime': 1000 * 60,
+    'birthdaysUrl': '/birthdays',
+
+    'choresPollTime': 1000 * 60,
+    'choresUrl': '/chore',
+
     'subwayPollTime': 1000 * 60,
     'subwayUrl': '/mta-service-status',
     'subwayRemoteUrl': 'http://web.mta.info/status/serviceStatus.txt',

@@ -3,6 +3,8 @@ window.AutoHUDController = {
 
 	setWatchers: ->
 		@watchTime()
+		@watchBirthdays()
+		@watchChores()
 		@watchWeather()
 		@watchSubway()
 
@@ -40,6 +42,40 @@ window.AutoHUDController = {
 				day: d.getDate()
 				year: d.getFullYear()
 			}
+		})
+
+
+	# birthdays
+	#############################################################################
+
+	watchBirthdays: ->
+		@getBirthdays()
+		setInterval(=>
+			@getBirthdays()
+		, @C.birthdaysPollTime)
+
+	getBirthdays: ->
+		$.ajax("/birthdays", {
+			type: "GET"
+			success: (data) =>
+				@model.set(data)
+		})
+
+
+	# chores
+	#############################################################################
+
+	watchChores: ->
+		@getChores()
+		setInterval(=>
+			@getChores()
+		, @C.choresPollTime)
+
+	getChores: ->
+		$.ajax("/chores", {
+			type: "GET"
+			success: (data) =>
+				@model.set(data)
 		})
 
 

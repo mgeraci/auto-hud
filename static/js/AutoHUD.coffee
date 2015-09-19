@@ -51,7 +51,6 @@ window.AutoHUD = {
 				@parseVersion(data)
 				@model.set({noConnection: false})
 			error: =>
-				console.log "no response from the version watcher; the server must be down."
 				@model.set({noConnection: true})
 		})
 
