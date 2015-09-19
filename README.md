@@ -7,6 +7,9 @@ behind the mirror and hit "refresh").
 The server is written with python and flask, and the client is written with Sass
 and CoffeeScript, with Underscore templating.
 
+This project was inspired by Hannah Mittelstaedt's awesome
+[HomeMirror](https://github.com/HannahMitt/HomeMirror).
+
 ## Running the app
 The backend is written in python, and uses flask as the server. Dependencies are
 listed in requirements.txt. You can `pip-install` them into a fresh Python
@@ -52,8 +55,7 @@ are:
 # how frequently to update the weather
 'weatherPollTime': 1000 * 60 * 5,
 
-# how frequently to update the subway status
-'subwayPollTime': 1000 * 60,
+# there's also birthdaysPollTime, choresPollTime, and subwayPollTime
 
 # indicate which subway lines you wish to display with a `1`
 'subwayLinesToShow': {
