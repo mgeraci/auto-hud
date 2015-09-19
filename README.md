@@ -22,19 +22,14 @@ workon auto-hud
 pip install -r requirements.txt
 ```
 
-Then, to start the server, run `python auto-hud.py`.
-
-## Static files
-Static files are compiled with gulp, a node.js based build system). You'll need
-node and gulp installed, and then you can run `npm install` in the project root
-to install the packages required to compile Auto-HUD's frontend files. Just run
-`gulp` in the project root to watch for Sass and CoffeeScript changes.
+Then, to start the server, run `python auto-hud.py`. But you'll need to add a
+configuration file before it starts up. What configuration file? Glad you asked.
 
 ## Configuration
 Auto HUD requires two configuration files in the project root to run,
-`constants.py` and `localsettings.py`. Constants contains sitewide settings,
-like the order of modules. Localsettings contains personal sitewide settings,
-like api keys and birthdays.
+`localsettings.py` and `constants.py`. Localsettings contains personal sitewide
+settings, like api keys and birthdays. Constants contains non-sensitive
+sitewide settings, like the order of modules.
 
 ### constants.py
 If you'd like to modify the app, you may consider changing a definition in
@@ -155,3 +150,9 @@ CHORES = {
     ],
 }
 ```
+
+## Static files
+Static files are compiled with gulp, a node.js based build system). You'll need
+node and gulp installed, and then you can run `npm install` in the project root
+to install the packages required to compile Auto-HUD's frontend files. Just run
+`gulp` in the project root to watch for Sass and CoffeeScript changes.
