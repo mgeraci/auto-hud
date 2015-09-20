@@ -10,6 +10,13 @@ and CoffeeScript, with Underscore templating.
 This project was inspired by Hannah Mittelstaedt's awesome
 [HomeMirror](https://github.com/HannahMitt/HomeMirror).
 
+## Contents
+* [Running the app](#running-the-app)
+* [Configuration](#configuration)
+	* [localsettings.py](#localsettings.py)
+	* [constants.py](#constants.py)
+* [Static files](#static-files)
+
 ## Running the app
 The backend is written in python, and uses flask as the server. Dependencies are
 listed in requirements.txt. You can `pip-install` them into a fresh Python
@@ -30,55 +37,6 @@ Auto HUD requires two configuration files in the project root to run,
 `localsettings.py` and `constants.py`. Localsettings contains personal sitewide
 settings, like api keys and birthdays. Constants contains non-sensitive
 sitewide settings, like the order of modules.
-
-### constants.py
-If you'd like to modify the app, you may consider changing a definition in
-`constants.py`. Some of the more interesting constants, and their defaults,
-are:
-
-```
-# list your modules here. the order determines the display.
-'sections': [
-		'time',
-		'weather',
-		'birthdays',
-		'chores',
-		'subway',
-		'noConnection',
-],
-
-# how frequently to update the weather
-'weatherPollTime': 1000 * 60 * 5,
-
-# there's also birthdaysPollTime, choresPollTime, and subwayPollTime
-
-# indicate which subway lines you wish to display with a `1`
-'subwayLinesToShow': {
-		'7':    0,
-		'123':  0,
-		'456':  0,
-		'ACE':  0,
-		'BDFM': 1,
-		'G':    0,
-		'JZ':   0,
-		'L':    0,
-		'NQR':  1,
-		'S':    0,
-		'SIR':  0,
-},
-
-# what days you'd like to see subway status
-'subwayDayRange': [
-		'Monday',
-		'Tuesday',
-		'Wednesday',
-		'Thursday',
-		'Friday',
-],
-
-# a time range during which to display subway status
-'subwayTimeRange': [5, 13],
-```
 
 ### localsettings.py
 Here is an example `localsettings.py` file:
@@ -149,6 +107,55 @@ CHORES = {
     'Sunday': [
     ],
 }
+```
+
+### constants.py
+If you'd like to modify the app, you may consider changing a definition in
+`constants.py`. Some of the more interesting constants, and their defaults,
+are:
+
+```
+# list your modules here. the order determines the display.
+'sections': [
+		'time',
+		'weather',
+		'birthdays',
+		'chores',
+		'subway',
+		'noConnection',
+],
+
+# how frequently to update the weather
+'weatherPollTime': 1000 * 60 * 5,
+
+# there's also birthdaysPollTime, choresPollTime, and subwayPollTime
+
+# indicate which subway lines you wish to display with a `1`
+'subwayLinesToShow': {
+		'7':    0,
+		'123':  0,
+		'456':  0,
+		'ACE':  0,
+		'BDFM': 1,
+		'G':    0,
+		'JZ':   0,
+		'L':    0,
+		'NQR':  1,
+		'S':    0,
+		'SIR':  0,
+},
+
+# what days you'd like to see subway status
+'subwayDayRange': [
+		'Monday',
+		'Tuesday',
+		'Wednesday',
+		'Thursday',
+		'Friday',
+],
+
+# a time range during which to display subway status
+'subwayTimeRange': [5, 13],
 ```
 
 ## Static files
