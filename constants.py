@@ -10,6 +10,8 @@ C = {
         'noConnection',
     ],
 
+    'timePollTime': 10,
+
     'weatherPollTime': 1000 * 60 * 5,
     'weatherUrl': 'https://api.forecast.io/forecast/',
 

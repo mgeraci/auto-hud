@@ -2929,8 +2929,20 @@ body {
   letter-spacing: 1.2px;
   line-height: 1.2em; }
 
-.fa {
+.fa,
+.wi {
   opacity: 0.8; }
+
+.wi {
+  font-size: 93%; }
+
+#fa-trigger,
+#wi-trigger {
+  position: absolute;
+  top: -1000px;
+  left: -100px;
+  font-size: 1px;
+  opacity: 0; }
 
 .section-wrapper {
   float: right;
@@ -2983,8 +2995,3 @@ body {
 
 .hud-section-no-connection {
   font-size: 20px; }
-
-#fa-trigger,
-#wi-trigger {
-  font-size: 1px;
-  opacity: 0; }

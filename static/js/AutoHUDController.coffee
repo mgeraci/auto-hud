@@ -1,41 +1,45 @@
 window.AutoHUDController = {
 	useTestWeatherData: false
+	watchers: {}
 
 	setWatchers: ->
-		@watchTime()
-		@watchBirthdays()
-		@watchChores()
-		@watchWeather()
-		@watchSubway()
+		for section in C.sections
+			@makeWatcher(section)
+
+	# start a timer for each section which has one. each section needs:
+	# - a function called sectionGetter, where `section` is the section name
+	# - an entry in constants.py called sectionPollTime, where `section` is the
+	#   section name
+	makeWatcher: (section) ->
+		return if !section?
+
+		getter = @["#{section}Getter"]
+		return if !getter? || !_.isFunction(getter)
+
+		pollTime = C["#{section}PollTime"]
+		return if !pollTime
+
+		# set the intial state
+		getter.call(@)
+
+		# set an interval
+		@watchers[section] = setInterval(=>
+			getter.call(@)
+		, pollTime)
 
 
 	# time and date
 	#############################################################################
 
-	watchTime: ->
-		@getTime()
-		@timeWatcher = setInterval(=>
-			@getTime()
-		, 1000)
-
-	getTime: ->
+	timeGetter: ->
 		d = new Date()
-
-		minutes = d.getMinutes()
-		if minutes < 10
-			minutes = "0#{minutes}"
-
-		seconds = d.getSeconds()
-		if seconds < 10
-			seconds = "0#{seconds}"
-
-		month = @C.months[d.getMonth()]
+		month = C.months[d.getMonth()]
 
 		@model.set({
 			time: {
-				hours: d.getHours()
-				minutes: minutes
-				seconds: seconds
+				hours: @padZeroes(d.getHours())
+				minutes: @padZeroes(d.getMinutes())
+				seconds: @padZeroes(d.getSeconds())
 			}
 			date: {
 				month: month
@@ -44,17 +48,18 @@ window.AutoHUDController = {
 			}
 		})
 
+	# 5 => "05"
+	padZeroes: (number) ->
+		if number < 10
+			number = "0#{number}"
+
+		return number
+
 
 	# birthdays
 	#############################################################################
 
-	watchBirthdays: ->
-		@getBirthdays()
-		setInterval(=>
-			@getBirthdays()
-		, @C.birthdaysPollTime)
-
-	getBirthdays: ->
+	birthdaysGetter: ->
 		$.ajax("/birthdays", {
 			type: "GET"
 			success: (data) =>
@@ -65,13 +70,7 @@ window.AutoHUDController = {
 	# chores
 	#############################################################################
 
-	watchChores: ->
-		@getChores()
-		setInterval(=>
-			@getChores()
-		, @C.choresPollTime)
-
-	getChores: ->
+	choresGetter: ->
 		$.ajax("/chores", {
 			type: "GET"
 			success: (data) =>
@@ -82,18 +81,12 @@ window.AutoHUDController = {
 	# weather
 	#############################################################################
 
-	watchWeather: ->
-		@getWeather()
-		setInterval(=>
-			@getWeather()
-		, @C.weatherPollTime)
-
-	getWeather: ->
+	weatherGetter: ->
 		if @useTestWeatherData
 			@formatWeather(weatherData)
 			return
 
-		url = "#{@C.weatherUrl}#{@model.get("forecastioApiKey")}/#{@model.get("forecastioLatLong")}"
+		url = "#{C.weatherUrl}#{@model.get("forecastioApiKey")}/#{@model.get("forecastioLatLong")}"
 
 		# to use test data, comment out the `getJSON` and add:
 		# @formatWeather(weatherData)
@@ -149,38 +142,32 @@ window.AutoHUDController = {
 	# subway
 	#############################################################################
 
-	watchSubway: ->
-		@getSubwayStatus()
-		setInterval(=>
-			@getSubwayStatus()
-		, @C.subwayPollTime)
-
-	getSubwayStatus: ->
+	subwayGetter: ->
 		d = new Date()
 
 		# if the constants have a subway day range, check that we qualify
-		if @C.subwayDayRange?
-			day = @C.daysJs[d.getDay()]
+		if C.subwayDayRange?
+			day = C.daysJs[d.getDay()]
 
-			if @C.subwayDayRange.indexOf(day) < 0
+			if C.subwayDayRange.indexOf(day) < 0
 				return
 
 		# if the constants have a subway time range, check that we qualify
-		if @C.subwayTimeRange? && @C.subwayTimeRange.length == 2
+		if C.subwayTimeRange? && C.subwayTimeRange.length == 2
 			hour = d.getHours()
 
-			if hour < @C.subwayTimeRange[0] || hour >= @C.subwayTimeRange[1]
+			if hour < C.subwayTimeRange[0] || hour >= C.subwayTimeRange[1]
 				@model.set({subway: null})
 				return
 
-		$.ajax(@C.subwayUrl, {
+		$.ajax(C.subwayUrl, {
 			type: "GET"
 			dataType: "xml"
 			success: (data) =>
-				@parseSubwayStatus(data)
+				@parseSubway(data)
 		})
 
-	parseSubwayStatus: (data) ->
+	parseSubway: (data) ->
 		subwayStatus = {}
 
 		return if !data || !$(data).length
@@ -197,7 +184,7 @@ window.AutoHUDController = {
 			status = status.text()
 
 			# bail if we don't care about this subway line
-			continue if !@C.subwayLinesToShow[name]
+			continue if !C.subwayLinesToShow[name]
 
 			subwayStatus[name] = {
 				lines: @formatLines(name)

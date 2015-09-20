@@ -1,20 +1,16 @@
 window.AutoHUD = {
   versionPollTime: 5000,
   init: function(params) {
-    console.log(params);
-    this.C = params.C;
+    window.C = params.C;
     this.model = AutoHUDModel;
     this.view = AutoHUDView;
     this.controller = AutoHUDController;
     this.model.view = this.view;
     this.model.controller = this.controller;
-    this.model.C = params.C;
     this.view.model = this.model;
     this.view.controller = this.controller;
-    this.view.C = params.C;
     this.controller.model = this.model;
     this.controller.view = this.view;
-    this.controller.C = params.C;
     this.model.set(params);
     this.view.makeTemplates();
     if (params.version == null) {
@@ -61,38 +57,46 @@ window.AutoHUD = {
 
 window.AutoHUDController = {
   useTestWeatherData: false,
+  watchers: {},
   setWatchers: function() {
-    this.watchTime();
-    this.watchBirthdays();
-    this.watchChores();
-    this.watchWeather();
-    return this.watchSubway();
+    var i, len, ref, results, section;
+    ref = C.sections;
+    results = [];
+    for (i = 0, len = ref.length; i < len; i++) {
+      section = ref[i];
+      results.push(this.makeWatcher(section));
+    }
+    return results;
   },
-  watchTime: function() {
-    this.getTime();
-    return this.timeWatcher = setInterval((function(_this) {
+  makeWatcher: function(section) {
+    var getter, pollTime;
+    if (section == null) {
+      return;
+    }
+    getter = this[section + "Getter"];
+    if ((getter == null) || !_.isFunction(getter)) {
+      return;
+    }
+    pollTime = C[section + "PollTime"];
+    if (!pollTime) {
+      return;
+    }
+    getter.call(this);
+    return this.watchers[section] = setInterval((function(_this) {
       return function() {
-        return _this.getTime();
+        return getter.call(_this);
       };
-    })(this), 1000);
+    })(this), pollTime);
   },
-  getTime: function() {
-    var d, minutes, month, seconds;
+  timeGetter: function() {
+    var d, month;
     d = new Date();
-    minutes = d.getMinutes();
-    if (minutes < 10) {
-      minutes = "0" + minutes;
-    }
-    seconds = d.getSeconds();
-    if (seconds < 10) {
-      seconds = "0" + seconds;
-    }
-    month = this.C.months[d.getMonth()];
+    month = C.months[d.getMonth()];
     return this.model.set({
       time: {
-        hours: d.getHours(),
-        minutes: minutes,
-        seconds: seconds
+        hours: this.padZeroes(d.getHours()),
+        minutes: this.padZeroes(d.getMinutes()),
+        seconds: this.padZeroes(d.getSeconds())
       },
       date: {
         month: month,
@@ -101,15 +105,13 @@ window.AutoHUDController = {
       }
     });
   },
-  watchBirthdays: function() {
-    this.getBirthdays();
-    return setInterval((function(_this) {
-      return function() {
-        return _this.getBirthdays();
-      };
-    })(this), this.C.birthdaysPollTime);
+  padZeroes: function(number) {
+    if (number < 10) {
+      number = "0" + number;
+    }
+    return number;
   },
-  getBirthdays: function() {
+  birthdaysGetter: function() {
     return $.ajax("/birthdays", {
       type: "GET",
       success: (function(_this) {
@@ -119,15 +121,7 @@ window.AutoHUDController = {
       })(this)
     });
   },
-  watchChores: function() {
-    this.getChores();
-    return setInterval((function(_this) {
-      return function() {
-        return _this.getChores();
-      };
-    })(this), this.C.choresPollTime);
-  },
-  getChores: function() {
+  choresGetter: function() {
     return $.ajax("/chores", {
       type: "GET",
       success: (function(_this) {
@@ -137,21 +131,13 @@ window.AutoHUDController = {
       })(this)
     });
   },
-  watchWeather: function() {
-    this.getWeather();
-    return setInterval((function(_this) {
-      return function() {
-        return _this.getWeather();
-      };
-    })(this), this.C.weatherPollTime);
-  },
-  getWeather: function() {
+  weatherGetter: function() {
     var url;
     if (this.useTestWeatherData) {
       this.formatWeather(weatherData);
       return;
     }
-    url = "" + this.C.weatherUrl + (this.model.get("forecastioApiKey")) + "/" + (this.model.get("forecastioLatLong"));
+    url = "" + C.weatherUrl + (this.model.get("forecastioApiKey")) + "/" + (this.model.get("forecastioLatLong"));
     return $.getJSON(url + "?callback=?", (function(_this) {
       return function(data) {
         return _this.formatWeather(data);
@@ -200,43 +186,35 @@ window.AutoHUDController = {
       tomorrow: tomorrow
     };
   },
-  watchSubway: function() {
-    this.getSubwayStatus();
-    return setInterval((function(_this) {
-      return function() {
-        return _this.getSubwayStatus();
-      };
-    })(this), this.C.subwayPollTime);
-  },
-  getSubwayStatus: function() {
+  subwayGetter: function() {
     var d, day, hour;
     d = new Date();
-    if (this.C.subwayDayRange != null) {
-      day = this.C.daysJs[d.getDay()];
-      if (this.C.subwayDayRange.indexOf(day) < 0) {
+    if (C.subwayDayRange != null) {
+      day = C.daysJs[d.getDay()];
+      if (C.subwayDayRange.indexOf(day) < 0) {
         return;
       }
     }
-    if ((this.C.subwayTimeRange != null) && this.C.subwayTimeRange.length === 2) {
+    if ((C.subwayTimeRange != null) && C.subwayTimeRange.length === 2) {
       hour = d.getHours();
-      if (hour < this.C.subwayTimeRange[0] || hour >= this.C.subwayTimeRange[1]) {
+      if (hour < C.subwayTimeRange[0] || hour >= C.subwayTimeRange[1]) {
         this.model.set({
           subway: null
         });
         return;
       }
     }
-    return $.ajax(this.C.subwayUrl, {
+    return $.ajax(C.subwayUrl, {
       type: "GET",
       dataType: "xml",
       success: (function(_this) {
         return function(data) {
-          return _this.parseSubwayStatus(data);
+          return _this.parseSubway(data);
         };
       })(this)
     });
   },
-  parseSubwayStatus: function(data) {
+  parseSubway: function(data) {
     var i, len, line, name, ref, status, subwayStatus;
     subwayStatus = {};
     if (!data || !$(data).length) {
@@ -253,7 +231,7 @@ window.AutoHUDController = {
       }
       name = name.text();
       status = status.text();
-      if (!this.C.subwayLinesToShow[name]) {
+      if (!C.subwayLinesToShow[name]) {
         continue;
       }
       subwayStatus[name] = {
@@ -288,7 +266,7 @@ window.AutoHUDModel = {
       value = props[key];
       this.data[key] = value;
     }
-    return AutoHUD.view.render();
+    return this.view.render();
   },
   get: function(prop) {
     return this.data[prop];
@@ -309,7 +287,7 @@ window.AutoHUDView = {
     if (_.isEqual({}, this.templates)) {
       return;
     }
-    ref = this.C.sections;
+    ref = C.sections;
     for (i = 0, len = ref.length; i < len; i++) {
       section = ref[i];
       hasLastProps = ((ref1 = this.lastProps) != null ? ref1[section] : void 0) != null;
@@ -325,7 +303,7 @@ window.AutoHUDView = {
   },
   makeTemplates: function() {
     var i, len, ref, results, section;
-    ref = this.C.sections;
+    ref = C.sections;
     results = [];
     for (i = 0, len = ref.length; i < len; i++) {
       section = ref[i];

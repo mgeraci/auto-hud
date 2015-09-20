@@ -13,6 +13,10 @@ $text-size-quartiary: 20px
 
 $gutter: 50px
 
+
+// general styles
+//////////////////////////////////////////////////////////////////////////////
+
 body
   padding: $gutter
   background: $background
@@ -23,9 +27,24 @@ body
   letter-spacing: 1.2px
   line-height: 1.2em
 
-// font icon styles
-.fa
+// font icon styles (fa = font awesome, wi = weather icons)
+.fa,
+.wi
   opacity: 0.8
+
+.wi
+  font-size: 93%
+
+// here's a little hack: we want to add a font-awesome icon at the very start,
+// to trigger the fonts to download at the beginning (in case the server goes
+// down before we actually need to use one. so put these in the dom, but hidden.
+#fa-trigger,
+#wi-trigger
+  position: absolute
+  top: -1000px
+  left: -100px
+  font-size: 1px
+  opacity: 0
 
 .section-wrapper
   float: right
@@ -48,6 +67,10 @@ body
 
     &:first-child
       margin-top: 0
+
+
+// sections
+//////////////////////////////////////////////////////////////////////////////
 
 .hud-section-time
   h1
@@ -92,11 +115,3 @@ body
 
 .hud-section-no-connection
   font-size: $text-size-quartiary
-
-// here's a little hack, but we want to add a font-awesome icon at the very
-// start, to trigger the fonts to download at the beginning (in case the
-// server goes down before we actually need to use on
-#fa-trigger,
-#wi-trigger
-  font-size: 1px
-  opacity: 0

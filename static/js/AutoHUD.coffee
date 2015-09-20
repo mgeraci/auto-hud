@@ -2,8 +2,8 @@ window.AutoHUD = {
 	versionPollTime: 5000
 
 	init: (params)->
-		console.log params
-		@C = params.C
+		# set the app constants on the window
+		window.C = params.C
 
 		# get the model, view, and controller from the window
 		@model = AutoHUDModel
@@ -13,15 +13,12 @@ window.AutoHUD = {
 		# set up cross-references
 		@model.view = @view
 		@model.controller = @controller
-		@model.C = params.C
 		@view.model = @model
 		@view.controller = @controller
-		@view.C = params.C
 		@controller.model = @model
 		@controller.view = @view
-		@controller.C = params.C
 
-		# send data to the model
+		# send the initial data to the model
 		@model.set(params)
 
 		# initialize the underscore templates
@@ -38,6 +35,7 @@ window.AutoHUD = {
 			@fetchVersion()
 		, @versionPollTime)
 
+		# kick off the watchers for each section
 		@controller.setWatchers()
 
 
