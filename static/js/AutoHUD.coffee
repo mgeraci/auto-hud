@@ -1,7 +1,7 @@
 window.AutoHUD = {
 	versionPollTime: 5000
 
-	init: (params)->
+	init: (params) ->
 		# set the app constants on the window
 		window.C = params.C
 
@@ -18,29 +18,27 @@ window.AutoHUD = {
 		@controller.model = @model
 		@controller.view = @view
 
-		# send the initial data to the model
+		# initialize the model, view, and controller
 		@model.set(params)
+		@view.init()
+		@controller.init()
 
-		# initialize the underscore templates
-		@view.makeTemplates()
+		@watchVersion(params)
 
+
+	# versioning
+	#############################################################################
+
+	watchVersion: (params) ->
 		# set the current version on the sigleton. if it's missing, refresh.
 		if !params.version?
 			window.location.reload()
 		else
 			@version = params.version
 
-		# watch for version changes
 		@versionWatcher = setInterval(=>
 			@fetchVersion()
 		, @versionPollTime)
-
-		# kick off the watchers for each section
-		@controller.setWatchers()
-
-
-	# versioning
-	#############################################################################
 
 	fetchVersion: ->
 		$.ajax("/version", {

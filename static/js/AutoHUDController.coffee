@@ -2,7 +2,7 @@ window.AutoHUDController = {
 	useTestWeatherData: false
 	watchers: {}
 
-	setWatchers: ->
+	init: ->
 		for section in C.sections
 			@makeWatcher(section)
 

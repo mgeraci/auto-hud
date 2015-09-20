@@ -12,18 +12,21 @@ window.AutoHUD = {
     this.controller.model = this.model;
     this.controller.view = this.view;
     this.model.set(params);
-    this.view.makeTemplates();
+    this.view.init();
+    this.controller.init();
+    return this.watchVersion(params);
+  },
+  watchVersion: function(params) {
     if (params.version == null) {
       window.location.reload();
     } else {
       this.version = params.version;
     }
-    this.versionWatcher = setInterval((function(_this) {
+    return this.versionWatcher = setInterval((function(_this) {
       return function() {
         return _this.fetchVersion();
       };
     })(this), this.versionPollTime);
-    return this.controller.setWatchers();
   },
   fetchVersion: function() {
     return $.ajax("/version", {
@@ -58,7 +61,7 @@ window.AutoHUD = {
 window.AutoHUDController = {
   useTestWeatherData: false,
   watchers: {},
-  setWatchers: function() {
+  init: function() {
     var i, len, ref, results, section;
     ref = C.sections;
     results = [];
@@ -278,6 +281,16 @@ window.AutoHUDModel = {
 
 window.AutoHUDView = {
   templates: {},
+  init: function() {
+    var i, len, ref, results, section;
+    ref = C.sections;
+    results = [];
+    for (i = 0, len = ref.length; i < len; i++) {
+      section = ref[i];
+      results.push(this.templates[section] = _.template($("#" + section + "-template").html()));
+    }
+    return results;
+  },
   render: function() {
     var hasLastProps, hasNextProps, i, len, nextProps, ref, ref1, section;
     nextProps = this.model.getAll();
@@ -300,15 +313,5 @@ window.AutoHUDView = {
       }));
     }
     return this.lastProps = $.extend(true, {}, nextProps);
-  },
-  makeTemplates: function() {
-    var i, len, ref, results, section;
-    ref = C.sections;
-    results = [];
-    for (i = 0, len = ref.length; i < len; i++) {
-      section = ref[i];
-      results.push(this.templates[section] = _.template($("#" + section + "-template").html()));
-    }
-    return results;
   }
 };

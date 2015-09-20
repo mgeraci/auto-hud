@@ -1,6 +1,11 @@
 window.AutoHUDView = {
 	templates: {}
 
+	init: ->
+		# grab templates fromt the dom
+		for section in C.sections
+			@templates[section] = _.template($("##{section}-template").html())
+
 	# render each section, unless it hasn't changed
 	render: ->
 		nextProps = @model.getAll()
@@ -22,8 +27,4 @@ window.AutoHUDView = {
 			)
 
 		@lastProps = $.extend(true, {}, nextProps)
-
-	makeTemplates: ->
-		for section in C.sections
-			@templates[section] = _.template($("##{section}-template").html())
 }
