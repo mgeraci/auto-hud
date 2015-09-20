@@ -13,8 +13,8 @@ This project was inspired by Hannah Mittelstaedt's awesome
 ## Contents
 * [Running the app](#running-the-app)
 * [Configuration](#configuration)
-	* [localsettings.py](#localsettings.py)
-	* [constants.py](#constants.py)
+	* [localsettings.py](#localsettingspy)
+	* [constants.py](#constantspy)
 * [Static files](#static-files)
 
 ## Running the app
