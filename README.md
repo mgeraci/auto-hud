@@ -159,7 +159,7 @@ are:
 ```
 
 ## Static files
-Static files are compiled with gulp, a node.js based build system). You'll need
+Static files are compiled with gulp, a node.js based build system. You'll need
 node and gulp installed, and then you can run `npm install` in the project root
 to install the packages required to compile Auto-HUD's frontend files. Just run
 `gulp` in the project root to watch for Sass and CoffeeScript changes.
