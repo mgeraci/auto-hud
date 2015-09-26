@@ -2919,11 +2919,17 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
+@font-face {
+  font-family: "helvetica_neue";
+  font-weight: 100;
+  font-style: normal;
+  src: url("../fonts/HelveticaNeue-UltraLight.eot");
+  src: url("../fonts/HelveticaNeue-UltraLight.eot?#iefix") format("embedded-opentype"), url("../fonts/HelveticaNeue-UltraLight.woff") format("woff"), url("../fonts/HelveticaNeue-UltraLight.ttf") format("truetype"), url("../fonts/HelveticaNeue-UltraLight.svg#helvetica_neue") format("svg"); }
 body {
   padding: 50px;
   background: #000;
   color: #aaa;
-  font-family: helvetica neue, helvetica, arial, sans-serif;
+  font-family: helvetica_neue;
   font-size: 30px;
   font-weight: 100;
   letter-spacing: 1.2px;
