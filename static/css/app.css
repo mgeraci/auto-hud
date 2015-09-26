@@ -2925,13 +2925,19 @@ table {
   font-style: normal;
   src: url("../fonts/HelveticaNeue-UltraLight.eot");
   src: url("../fonts/HelveticaNeue-UltraLight.eot?#iefix") format("embedded-opentype"), url("../fonts/HelveticaNeue-UltraLight.woff") format("woff"), url("../fonts/HelveticaNeue-UltraLight.ttf") format("truetype"), url("../fonts/HelveticaNeue-UltraLight.svg#helvetica_neue") format("svg"); }
+@font-face {
+  font-family: "helvetica_neue";
+  font-weight: 200;
+  font-style: normal;
+  src: url("../fonts/HelveticaNeue-Light.eot");
+  src: url("../fonts/HelveticaNeue-Light.eot?#iefix") format("embedded-opentype"), url("../fonts/HelveticaNeue-Light.woff") format("woff"), url("../fonts/HelveticaNeue-Light.ttf") format("truetype"), url("../fonts/HelveticaNeue-Light.svg#helvetica_neue") format("svg"); }
 body {
   padding: 50px;
   background: #000;
   color: #aaa;
   font-family: helvetica_neue;
   font-size: 30px;
-  font-weight: 100;
+  font-weight: 200;
   letter-spacing: 1.2px;
   line-height: 1.2em; }
 
