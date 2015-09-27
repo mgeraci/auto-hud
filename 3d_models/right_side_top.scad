@@ -17,14 +17,16 @@ module nail() {
 	}
 }
 
-difference() {
-	translate([width, height * -1 + border_size, 0]) {
-		cube([border_size, height, border_size]);
+translate([width * -1, 0, 0]) {
+	difference() {
+		translate([width, height * -1 + border_size, 0]) {
+			cube([border_size, height, border_size]);
 
-		translate([0, 0, border_size]){
-			cube([border_size, height - border_size, border_size]);
+			translate([0, 0, border_size]){
+				cube([border_size, height - border_size, border_size]);
+			}
 		}
-	}
 
-	nail();
+		nail();
+	}
 }
