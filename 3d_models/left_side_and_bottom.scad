@@ -20,7 +20,9 @@ cord_size = 30;
 /////////////////////////////////////////////////////////////////////////////
 
 // side
-cube([border_size, height + border_size, border_size * 2]);
+translate([width, 0, 0]) {
+	cube([border_size, height + border_size, border_size * 2]);
+}
 
 // ipad bottom holder: left
 cube([width + border_size, border_size, border_size * 2]);
@@ -30,7 +32,9 @@ cube([width + border_size, border_size, border_size * 2]);
 /////////////////////////////////////////////////////////////////////////////
 
 // side
-cube([border_size * 2, height + border_size, border_size]);
+translate([width - border_size, 0, 0]) {
+	cube([border_size * 2, height + border_size, border_size]);
+}
 
 // ipad bottom holder: left
 cube([width + border_size, border_size * 2, border_size]);
@@ -41,13 +45,13 @@ cube([width + border_size, border_size * 2, border_size]);
 
 translate([0, x_height * -1, 0]) {
 	// left
-	cube([border_size, x_height, border_size * 2]);
+	translate([width + border_size / 2, 0, 0]) {
+		cube([border_size / 2, x_height, border_size * 2]);
+	}
 
 	// bottom
 	cube([width + border_size, border_size / 2, border_size * 2]);
 
 	// right (internal wall)
-	translate([width + border_size / 2, 0, 0]) {
-		cube([border_size / 2, x_height, border_size * 2]);
-	}
+	cube([border_size / 2, x_height, border_size * 2]);
 }
