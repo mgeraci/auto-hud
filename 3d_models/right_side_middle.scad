@@ -1,5 +1,4 @@
-// ipad dimensions. the wrapper will be bigger than this so it slides in.
-height = 120;
+height = 19;
 
 // how big the frame itself will be
 border_size = 8;
