@@ -17,7 +17,7 @@ module nail() {
 	}
 }
 
-translate([width * -1, 0, 0]) {
+translate([width * -1, border_size * -1, 0]) {
 	difference() {
 		translate([width, height * -1 + border_size, 0]) {
 			cube([border_size, height, border_size]);

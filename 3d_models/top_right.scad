@@ -1,7 +1,7 @@
 // how big the frame itself will be
 border_size = 8;
 
-// final dimension is the first number
+// desired final dimension is the first number
 width = 87 - border_size;
 
 // nail hole info
