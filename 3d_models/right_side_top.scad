@@ -1,4 +1,4 @@
-// ipad dimensions. the wrapper will be bigger than this so it slides in.
+// piece dimensions
 width = 60;
 height = 120;
 

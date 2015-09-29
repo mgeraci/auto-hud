@@ -1,6 +1,3 @@
-// maximum print size
-max = 120;
-
 // distance from the edge to the cable port on the ipad
 width = 82;
 

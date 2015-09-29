@@ -1,16 +1,16 @@
-// ipad dimensions. the wrapper will be bigger than this so it slides in.
-ipad_width = 60;
-ipad_height = 104;
+// piece dimensions
+width = 60;
+height = 104;
 
 // how big the frame itself will be
 border_size = 8;
 
-// nail hole info
+// nail hole dimensions
 nail_diameter = 4;
 nail_angle = 6; // degrees
 
 module nail() {
-	translate([border_size, ipad_height + border_size, 2]) {
+	translate([border_size, height + border_size, 2]) {
 		rotate([nail_angle, 0, 0]) {
 			cylinder(border_size * 2, nail_diameter, nail_diameter);
 		}
@@ -19,8 +19,8 @@ module nail() {
 
 // top edge
 difference() {
-	translate([0, ipad_height + border_size, 0]) {
-		cube([ipad_width + border_size, border_size, border_size * 2]);
+	translate([0, height + border_size, 0]) {
+		cube([width + border_size, border_size, border_size * 2]);
 	}
 
 	nail();
@@ -28,7 +28,7 @@ difference() {
 
 // side
 difference() {
-	cube([border_size, ipad_height + border_size * 2, border_size * 2]);
+	cube([border_size, height + border_size * 2, border_size * 2]);
 
 	nail();
 }
@@ -40,12 +40,12 @@ difference() {
 difference() {
 	translate([0, 0, border_size]) {
 		// top
-		translate([0, ipad_height, 0]) {
-			cube([ipad_width + border_size, border_size * 2, border_size]);
+		translate([0, height, 0]) {
+			cube([width + border_size, border_size * 2, border_size]);
 		}
 
 		// side
-		cube([border_size * 2, ipad_height + border_size * 2, border_size]);
+		cube([border_size * 2, height + border_size * 2, border_size]);
 	}
 
 	nail();

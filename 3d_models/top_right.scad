@@ -25,7 +25,6 @@ difference() {
 	nail();
 }
 
-
 // top ridge
 difference() {
 	translate([0, 0, border_size]) {
