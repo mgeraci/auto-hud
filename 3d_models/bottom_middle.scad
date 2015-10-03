@@ -13,9 +13,18 @@ cable_offset = 47.5;
 width = 65;
 
 difference() {
-	cube([width, border_size * 2, border_size / 2]);
+	difference() {
+		// main body
+		cube([width, border_size * 2, border_size / 2]);
 
-	translate([cable_offset, 0, border_size * -0.5]) {
-		cylinder(border_size * 1.5, cable_diameter, cable_diameter);
+		// curved cut
+		translate([cable_offset, cable_diameter / 2, border_size * -0.5]) {
+			cylinder(border_size * 1.5, cable_diameter / 2, cable_diameter / 2);
+		}
+	}
+
+	// square bottom to the curved cut
+	translate([cable_offset - cable_diameter / 2, cable_diameter * -0.5, border_size * -0.5]) {
+		cube([cable_diameter, cable_diameter, border_size * 1.5]);
 	}
 }
