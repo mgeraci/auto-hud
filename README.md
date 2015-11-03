@@ -16,6 +16,7 @@ This project was inspired by Hannah Mittelstaedt's awesome
 	* [localsettings.py](#localsettingspy)
 	* [constants.py](#constantspy)
 * [Static files](#static-files)
+* [Running the app on boot](#running-the-app-on-boot)
 
 ## Running the app
 The backend is written in python, and uses flask as the server. Dependencies are
@@ -163,3 +164,12 @@ Static files are compiled with gulp, a node.js based build system. You'll need
 node and gulp installed, and then you can run `npm install` in the project root
 to install the packages required to compile Auto-HUD's frontend files. Just run
 `gulp` in the project root to watch for Sass and CoffeeScript changes.
+
+## Running the app on boot
+To start the application when the computer boots, add a script to automate the
+loading of your virtualenv, and starting the flask task. An example script can
+be found [here](https://gist.github.com/mgeraci/8764990edb50e4023959). Be sure
+to make it executable! Then you can add a hook to OS X's login event by typing
+the following on your command line:
+
+	sudo defaults write com.apple.loginwindow LoginHook /path/to/your/script.sh
