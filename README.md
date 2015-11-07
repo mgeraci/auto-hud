@@ -10,6 +10,8 @@ and CoffeeScript, with Underscore templating.
 This project was inspired by Hannah Mittelstaedt's awesome
 [HomeMirror](https://github.com/HannahMitt/HomeMirror).
 
+![The finished product](https://github.com/mgeraci/auto-hud/photos/1_small.jpg)
+
 ## Contents
 * [Running the app](#running-the-app)
 * [Configuration](#configuration)
@@ -17,6 +19,7 @@ This project was inspired by Hannah Mittelstaedt's awesome
 	* [constants.py](#constantspy)
 * [Static files](#static-files)
 * [Running the app on boot](#running-the-app-on-boot)
+* [The build](#the-build)
 
 ## Running the app
 The backend is written in python, and uses flask as the server. Dependencies are
@@ -207,3 +210,5 @@ go!
 ```
 launchctl load ~/Library/LaunchAgents/[your-plist-file].plist
 ```
+
+## The build
