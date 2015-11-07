@@ -1,16 +1,24 @@
 # Auto HUD
-Auto HUD is an application to power a heads up display meant for mounting behind
-a 2-way mirror. It's `auto` because bumping a version number on the server will
-trigger a client-side refresh (so you don't have to go fetch your display from
-behind the mirror and hit "refresh").
+Auto HUD is a web application to power a Heads Up Display meant for mounting
+behind a 2-way mirror. It's `auto` because bumping a version number on the
+server will trigger a client-side refresh (so you don't have to go fetch your
+display from behind the mirror and hit "refresh").
 
-The server is written with python and flask, and the client is written with Sass
+The server is written in python with flask, and the client is written in Sass
 and CoffeeScript, with Underscore templating.
 
-This project was inspired by Hannah Mittelstaedt's awesome
+This project was inspired by Hannah Mittelstaedt's lovely
 [HomeMirror](https://github.com/HannahMitt/HomeMirror).
 
 ![The finished product](https://raw.githubusercontent.com/mgeraci/auto-hud/master/photos/8_small.jpg)
+
+Current display modules include:
+* Time and date
+* Weather overview for today and tomorrow
+* Birthdays
+* Chores and reminders
+* Subway status
+* Notification if the server goes down
 
 ## Contents
 * [Running the app](#running-the-app)
@@ -273,9 +281,13 @@ reflective coating with it.
 * When you cut out the paper for the backing, leave a little extra. It is quite
 hard to glue the paper to the mirror perfectly aligned, but it is quite easy to
 trim the excess later.
+* If you make a frame to hold your device, make sure you leave extra room for
+its power button. I made mine with a very low tolerance, so it was hard to
+slide the iPad in without accidentally turning it off by hitting the sleep
+button on the top.
 
 ### Where to buy a two way mirror
 Like Hannah, I purchased my two way mirror at [Canal Platic Center](http://www.canalplastic.com),
 where a 12" square mirror cost roughly $15. As she said, it is "a beautiful and
 highly recommended establishment." Hannah has also compiled a list of places to
-purchase mirrors: [Places to buy a two-way mirror](https://github.com/HannahMitt/HomeMirror/wiki/Places-to-buy-a-two-way-mirror)
+purchase mirrors better than I could: [places to buy a two-way mirror](https://github.com/HannahMitt/HomeMirror/wiki/Places-to-buy-a-two-way-mirror).
