@@ -233,9 +233,7 @@ thumb on it like in this photo; this was a test run.
 ### Step 3
 Figure out how to attach your display to the mirror. I opted to 3d print a
 frame that allows the iPad I was using to slide in from the side, with an
-additional piece that fits in the side to make it appear more. I glued the
-frame to the posterboard backing with E-600 craft adhesive; it feels pretty
-solid.
+additional piece that fits in to make it appear even from the outside.
 
 The 3d printed frame was fun to design and print, but also a bit troublesome;
 the desired dimensions were larger than the printer's printable area, so I had
@@ -248,30 +246,36 @@ The designs for the frame were written in [OpenSCAD](http://www.openscad.org/)
 and can be found in the repository [here](https://github.com/mgeraci/auto-hud/tree/master/3d_models).
 
 ### Step 4
-Glue the frame to the mirror-and-backing assembly. I also let this cure for a
-few days with a weight on it.
+Glue the frame to the mirror-and-backing assembly. I used E-600 craft adhesive
+and let it cure for a few days with a weight on it; it feels pretty solid.
+
 ![The mirror, backing, and frame assembly](https://raw.githubusercontent.com/mgeraci/auto-hud/master/photos/4_small.jpg)
 
 ### Step 5
 Turn on your display, connect it to the server, and make sure you're running in
 full screen and that the display won't turn off.
+
 ![The mirror, backing, and frame assembly, plus the display](https://raw.githubusercontent.com/mgeraci/auto-hud/master/photos/5_small.jpg)
 
 ### Step 6
 Close up the frame, add the power cord, and hang it up!
+
 ![With the side closed up](https://raw.githubusercontent.com/mgeraci/auto-hud/master/photos/6_small.jpg)
+
 ![All cabled up](https://raw.githubusercontent.com/mgeraci/auto-hud/master/photos/7_small.jpg)
+
+![The finished product](https://raw.githubusercontent.com/mgeraci/auto-hud/master/photos/8_small.jpg)
 
 ### Gotchas
 Some things I learned while building this:
 * Don't put tape on your mirror; when you take it off, it will take the
 reflective coating with it.
 * When you cut out the paper for the backing, leave a little extra. It is quite
-hard to glue the paper to the mirror perfectly aligned. But it is quite easy to
+hard to glue the paper to the mirror perfectly aligned, but it is quite easy to
 trim the excess later.
 
 ### Where to buy a two way mirror
 Like Hannah, I purchased my two way mirror at [Canal Platic Center](http://www.canalplastic.com),
 where a 12" square mirror cost roughly $15. As she said, it is "a beautiful and
 highly recommended establishment." Hannah has also compiled a list of places to
-purchase mirrors: [Places to buy a two-way mirror]https://github.com/HannahMitt/HomeMirror/wiki/Places-to-buy-a-two-way-mirror)
+purchase mirrors: [Places to buy a two-way mirror](https://github.com/HannahMitt/HomeMirror/wiki/Places-to-buy-a-two-way-mirror)
