@@ -242,8 +242,8 @@ thumb on it like in this photo; this was a test run.
 
 ### Step 3
 Figure out how to attach your display to the mirror. I opted to 3d print a
-frame that allows the iPad I was using to slide in from the side, with an
-additional piece that fits in to make it appear even from the outside.
+frame that allows the iPad I used to slide in from the side, with an additional
+piece that fits in to make it appear even from the outside.
 
 The 3d printed frame was fun to design and print, but also a bit troublesome;
 the desired dimensions were larger than the printer's printable area, so I had
@@ -277,8 +277,8 @@ Close up the frame, add the power cord, and hang it up!
 ![The finished product](https://raw.githubusercontent.com/mgeraci/auto-hud/master/photos/8_small.jpg)
 
 ### Gotchas
-Some things I learned while building this:
-* Don't put tape on your mirror; when you take it off, it will take the
+Here are some mistakes that I made that you can hopefully avoid:
+* Don't put tape on your mirror; when you take it off it will take the
 reflective coating with it.
 * When you cut out the paper for the backing, leave a little extra. It is quite
 hard to glue the paper to the mirror perfectly aligned, but it is quite easy to
