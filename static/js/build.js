@@ -186,7 +186,8 @@ window.AutoHUDController = {
       high: this.formatTemperature(day.temperatureMax),
       summary: day.summary.replace(/\.$/, ""),
       icon: day.icon,
-      tomorrow: tomorrow
+      tomorrow: tomorrow,
+      precip: day.precipProbability * 100
     };
   },
   subwayGetter: function() {

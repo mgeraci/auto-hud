@@ -136,6 +136,7 @@ window.AutoHUDController = {
 			summary: day.summary.replace(/\.$/, "")
 			icon: day.icon
 			tomorrow: tomorrow
+			precip: day.precipProbability * 100
 		}
 
 

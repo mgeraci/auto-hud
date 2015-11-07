@@ -21,8 +21,6 @@
 							<%= d.time.hours %>
 							<span class="colon">:</span>
 							<%= d.time.minutes %>
-							<span class="colon">:</span>
-							<%= d.time.seconds %>
 						</h1>
 					<% } %>
 					<% if (d.date) { %>
@@ -54,9 +52,8 @@
 							<br />
 						<% } %>
 						<%= d.weather.preview.summary %>
-						<% if (d.weather.preview.icon) { %>
-							<span class="wi wi-forecast-io-<%= d.weather.preview.icon %>"></span>
-						<% } %>
+						<br />
+						<%= d.weather.preview.precip %>% chance of rain
 					</li>
 				</div>
 			<% } %>
