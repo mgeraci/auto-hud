@@ -10,7 +10,7 @@ and CoffeeScript, with Underscore templating.
 This project was inspired by Hannah Mittelstaedt's awesome
 [HomeMirror](https://github.com/HannahMitt/HomeMirror).
 
-![The finished product](https://github.com/mgeraci/auto-hud/photos/1_small.jpg)
+![The finished product](https://raw.githubusercontent.com/mgeraci/auto-hud/master/photos/8_small.jpg)
 
 ## Contents
 * [Running the app](#running-the-app)
