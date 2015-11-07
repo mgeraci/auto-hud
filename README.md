@@ -46,7 +46,7 @@ configuration file before it starts up. What configuration file? Glad you asked.
 
 ## Configuration
 Auto HUD requires two configuration files in the project root to run,
-`localsettings.py` and `constants.py`. Localsettings contains personal sitewide
+`localsettings.py` and `constants.py`. Localsettings contains personal
 settings, like api keys and birthdays. Constants contains non-sensitive
 sitewide settings, like the order of modules.
 
@@ -223,12 +223,14 @@ launchctl load ~/Library/LaunchAgents/[your-plist-file].plist
 
 ### Step 1
 Trace out your mirror on a piece of black 4- or 6-ply posterboard.
+
 ![Tracing the mirror's dimensions](https://raw.githubusercontent.com/mgeraci/auto-hud/master/photos/1_small.jpg)
 
-Also trace out where you want your display's screen to end up.
+Also trace out where you want your display's screen to end up. Then cut out
+what you just traced!
+
 ![Tracing the display cut-out](https://raw.githubusercontent.com/mgeraci/auto-hud/master/photos/2_small.jpg)
 
-Then cut out what you just traced!
 
 ### Step 2
 Glue the paper to the mirror. I used a spray adhesive, generously coating the
