@@ -166,10 +166,44 @@ to install the packages required to compile Auto-HUD's frontend files. Just run
 `gulp` in the project root to watch for Sass and CoffeeScript changes.
 
 ## Running the app on boot
-To start the application when the computer boots, add a script to automate the
-loading of your virtualenv, and starting the flask task. An example script can
-be found [here](https://gist.github.com/mgeraci/8764990edb50e4023959). Be sure
-to make it executable! Then you can add a hook to OS X's login event by typing
-the following on your command line:
+To start the application when the computer boots, you can write a simple script
+to load the correct python, start flask, and log the output. Here's what I am
+using (you'd need to change the paths from `mediabox` to your user):
 
-	sudo defaults write com.apple.loginwindow LoginHook /path/to/your/script.sh
+```
+#!/bin/sh
+
+/Users/mediabox/.virtualenvs/auto-hud/bin/python /Users/mediabox/web/auto-hud/auto-hud.py > /Users/mediabox/Library/Logs/auto-hud.log 2>&1
+```
+
+Then, create a plist file in `~/Library/LaunchAgents/` that runs the script:
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Disabled</key>
+	<false/>
+	<key>KeepAlive</key>
+	<true/>
+	<key>Label</key>
+	<string>auto-hud starter</string>
+	<key>Program</key>
+	<string>/Users/mediabox/start-auto-hud.sh</string>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>StandardErrorPath</key>
+	<string>/tmp/auto-hud-starter.err</string>
+	<key>StandardOutPath</key>
+	<string>/tmp/auto-hud-starter.out</string>
+</dict>
+</plist>
+```
+
+Finally, load the plist file into OS X's launch control, and you'll be good to
+go!
+
+```
+launchctl load ~/Library/LaunchAgents/[your-plist-file].plist
+```
