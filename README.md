@@ -1,8 +1,12 @@
 # Auto HUD
-Auto HUD is a web application to power a Heads Up Display meant for mounting
-behind a 2-way mirror. It's `auto` because bumping a version number on the
-server will trigger a client-side refresh (so you don't have to go fetch your
-display from behind the mirror and hit "refresh").
+Auto HUD is a web application which powers a Heads Up Display mounted behind a
+2-way mirror.
+
+![The finished product](https://raw.githubusercontent.com/mgeraci/auto-hud/master/photos/8_small.jpg)
+
+It's `auto` because bumping a version number on the server will trigger a
+client-side refresh (so you don't have to go fetch your display from behind the
+mirror and hit "refresh").
 
 The server is written in python with flask, and the client is written in Sass
 and CoffeeScript, with Underscore templating.
@@ -10,13 +14,11 @@ and CoffeeScript, with Underscore templating.
 This project was inspired by Hannah Mittelstaedt's lovely
 [HomeMirror](https://github.com/HannahMitt/HomeMirror).
 
-![The finished product](https://raw.githubusercontent.com/mgeraci/auto-hud/master/photos/8_small.jpg)
-
-Current display modules include:
+Current modules include:
 * Time and date
 * Weather overview for today and tomorrow
 * Birthdays
-* Chores and reminders
+* Chores/reminders
 * Subway status
 * Notification if the server goes down
 
@@ -30,10 +32,11 @@ Current display modules include:
 * [The build](#the-build)
 
 ## Running the app
-The backend is written in python, and uses flask as the server. Dependencies are
-listed in requirements.txt. You can `pip-install` them into a fresh Python
-virtual environment. Assuming that you already have pip, virtualenv, and
-virtualenvwrapper installed, run the following in the project root:
+The backend is written in python, and uses flask as the server. Dependencies
+are listed in requirements.txt. After clongin the project, you can
+`pip-install` them into a fresh Python virtual environment. Assuming that you
+already have pip, virtualenv, and virtualenvwrapper installed, run the
+following in the project root:
 
 ```
 mkvirtualenv auto-hud
@@ -41,17 +44,19 @@ workon auto-hud
 pip install -r requirements.txt
 ```
 
-Then, to start the server, run `python auto-hud.py`. But you'll need to add a
-configuration file before it starts up. What configuration file? Glad you asked.
+Then, to start the server, run `python auto-hud.py`, and hit localhost:5000.
+But you'll need to add a configuration file before it starts up. What
+configuration file? Glad you asked.
 
 ## Configuration
 Auto HUD requires two configuration files in the project root to run,
 `localsettings.py` and `constants.py`. Localsettings contains personal
-settings, like api keys and birthdays. Constants contains non-sensitive
-sitewide settings, like the order of modules.
+settings, like api keys and birthdays, and therefore is not included in the
+repository. Constants contains non-sensitive sitewide settings, like the order
+of modules.
 
 ### localsettings.py
-Here is an example `localsettings.py` file:
+Here is an example `localsettings.py` file, which you can copy into your clone:
 
 ```.py
 # change this number to trigger the client to reload. use if you want to hot
@@ -171,15 +176,16 @@ are:
 ```
 
 ## Static files
-Static files are compiled with gulp, a node.js based build system. You'll need
-node and gulp installed, and then you can run `npm install` in the project root
-to install the packages required to compile Auto-HUD's frontend files. Just run
-`gulp` in the project root to watch for Sass and CoffeeScript changes.
+Static files are compiled with gulp, a node.js based build system. Once you
+have node and gulp installed, and then you can run `npm install` in the project
+root to install the packages required to compile Auto-HUD's frontend files.
+Then, run `gulp` in the project root to watch for Sass and CoffeeScript
+changes.
 
 ## Running the app on boot
-To start the application when the computer boots, you can write a simple script
-to load the correct python, start flask, and log the output. Here's what I am
-using (you'd need to change the paths from `mediabox` to your user):
+To start the application when your computer boots, you can write a simple
+script to run start flask up using the right python environment, and to log the
+output. Here's what I am using:
 
 ```
 #!/bin/sh
