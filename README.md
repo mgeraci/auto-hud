@@ -179,14 +179,13 @@ are:
 
 ## Static files
 Static files are compiled with gulp, a node.js based build system. Once you
-have node and gulp installed, you can then run `npm install` in the project
-root to install the packages required to compile Auto-HUD's frontend files.
-Then, run `gulp` in the project root to watch for Sass and CoffeeScript
-changes.
+have node and gulp installed, you can run `npm install` in the project root to
+install the packages required to compile the frontend files. Then, run `gulp`
+in the project root to watch for Sass and CoffeeScript changes.
 
 ## Running the app on boot
 To start the application when your computer boots, you can write a simple
-script to run start flask up using the right python environment, and to log the
+script to start flask using the correct python environment, and to log the
 output. Here's what I am using on OS X:
 
 ```
