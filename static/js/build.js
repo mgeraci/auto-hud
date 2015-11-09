@@ -187,7 +187,7 @@ window.AutoHUDController = {
       summary: day.summary.replace(/\.$/, ""),
       icon: day.icon,
       tomorrow: tomorrow,
-      precip: day.precipProbability * 100
+      precip: Math.round(day.precipProbability * 100)
     };
   },
   subwayGetter: function() {

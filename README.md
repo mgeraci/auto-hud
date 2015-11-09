@@ -1,5 +1,5 @@
 # Auto HUD
-Auto HUD is a web application which powers a Heads Up Display mounted behind a
+Auto HUD is a web application to power a Heads Up Display mounted behind a
 2-way mirror.
 
 ![The finished product](https://raw.githubusercontent.com/mgeraci/auto-hud/master/photos/8_small.jpg)
@@ -18,7 +18,7 @@ Current modules include:
 * Time and date
 * Weather overview for today and tomorrow
 * Birthdays
-* Chores/reminders
+* Chore reminders
 * Subway status
 * Notification if the server goes down
 
@@ -33,7 +33,7 @@ Current modules include:
 
 ## Running the app
 The backend is written in python, and uses flask as the server. Dependencies
-are listed in requirements.txt. After clongin the project, you can
+are listed in requirements.txt. After cloning the project, you can
 `pip-install` them into a fresh Python virtual environment. Assuming that you
 already have pip, virtualenv, and virtualenvwrapper installed, run the
 following in the project root:
@@ -56,7 +56,9 @@ repository. Constants contains non-sensitive sitewide settings, like the order
 of modules.
 
 ### localsettings.py
-Here is an example `localsettings.py` file, which you can copy into your clone:
+Here is an example `localsettings.py` file, which you can copy into your
+project root. You'll also need to obtain a free api key for
+[the Dark Sky api](https://developer.forecast.io/), which provides weather data.
 
 ```.py
 # change this number to trigger the client to reload. use if you want to hot
@@ -177,7 +179,7 @@ are:
 
 ## Static files
 Static files are compiled with gulp, a node.js based build system. Once you
-have node and gulp installed, and then you can run `npm install` in the project
+have node and gulp installed, you can then run `npm install` in the project
 root to install the packages required to compile Auto-HUD's frontend files.
 Then, run `gulp` in the project root to watch for Sass and CoffeeScript
 changes.
@@ -185,7 +187,7 @@ changes.
 ## Running the app on boot
 To start the application when your computer boots, you can write a simple
 script to run start flask up using the right python environment, and to log the
-output. Here's what I am using:
+output. Here's what I am using on OS X:
 
 ```
 #!/bin/sh
@@ -290,7 +292,7 @@ reflective coating with it.
 hard to glue the paper to the mirror perfectly aligned, but it is quite easy to
 trim the excess later.
 * If you make a frame to hold your device, make sure you leave extra room for
-its power button. I made mine with a very low tolerance, so it was hard to
+its power button. I made mine with a very low tolerance, so it is hard to
 slide the iPad in without accidentally turning it off by hitting the sleep
 button on the top.
 
