@@ -2,7 +2,7 @@
 Auto HUD is a web application to power a Heads Up Display mounted behind a
 2-way mirror.
 
-![The finished product](https://raw.githubusercontent.com/mgeraci/auto-hud/master/photos/8_small.jpg)
+![The finished product](https://raw.githubusercontent.com/mgeraci/auto-hud/master/photos/8.jpg)
 
 It's `auto` because bumping a version number on the server will trigger a
 client-side refresh (so you don't have to go fetch your display from behind the
@@ -232,12 +232,12 @@ launchctl load ~/Library/LaunchAgents/[your-plist-file].plist
 ### Step 1
 Trace out your mirror on a piece of black 4- or 6-ply posterboard.
 
-![Tracing the mirror's dimensions](https://raw.githubusercontent.com/mgeraci/auto-hud/master/photos/1_small.jpg)
+![Tracing the mirror's dimensions](https://raw.githubusercontent.com/mgeraci/auto-hud/master/photos/1.jpg)
 
 Also trace out where you want your display's screen to end up. Then cut out
 what you just traced!
 
-![Tracing the display cut-out](https://raw.githubusercontent.com/mgeraci/auto-hud/master/photos/2_small.jpg)
+![Tracing the display cut-out](https://raw.githubusercontent.com/mgeraci/auto-hud/master/photos/2.jpg)
 
 
 ### Step 2
@@ -246,7 +246,7 @@ paper, laying it against the mirror from one side to the other, and then
 leaving it with a weight on it overnight. You probably don't want have your
 thumb on it like in this photo; this was a test run.
 
-![Test fitting the backing to the mirror](https://raw.githubusercontent.com/mgeraci/auto-hud/master/photos/3_small.jpg)
+![Test fitting the backing to the mirror](https://raw.githubusercontent.com/mgeraci/auto-hud/master/photos/3.jpg)
 
 ### Step 3
 Figure out how to attach your display to the mirror. I opted to 3d print a
@@ -267,22 +267,22 @@ and can be found in the repository [here](https://github.com/mgeraci/auto-hud/tr
 Glue the frame to the mirror-and-backing assembly. I used E-600 craft adhesive
 and let it cure for a few days with a weight on it; it feels pretty solid.
 
-![The mirror, backing, and frame assembly](https://raw.githubusercontent.com/mgeraci/auto-hud/master/photos/4_small.jpg)
+![The mirror, backing, and frame assembly](https://raw.githubusercontent.com/mgeraci/auto-hud/master/photos/4.jpg)
 
 ### Step 5
 Turn on your display, connect it to the server, and make sure you're running in
 full screen and that the display won't turn off.
 
-![The mirror, backing, and frame assembly, plus the display](https://raw.githubusercontent.com/mgeraci/auto-hud/master/photos/5_small.jpg)
+![The mirror, backing, and frame assembly, plus the display](https://raw.githubusercontent.com/mgeraci/auto-hud/master/photos/5.jpg)
 
 ### Step 6
 Close up the frame, add the power cord, and hang it up!
 
-![With the side closed up](https://raw.githubusercontent.com/mgeraci/auto-hud/master/photos/6_small.jpg)
+![With the side closed up](https://raw.githubusercontent.com/mgeraci/auto-hud/master/photos/6.jpg)
 
-![All cabled up](https://raw.githubusercontent.com/mgeraci/auto-hud/master/photos/7_small.jpg)
+![All cabled up](https://raw.githubusercontent.com/mgeraci/auto-hud/master/photos/7.jpg)
 
-![The finished product](https://raw.githubusercontent.com/mgeraci/auto-hud/master/photos/8_small.jpg)
+![The finished product](https://raw.githubusercontent.com/mgeraci/auto-hud/master/photos/8.jpg)
 
 ### Gotchas
 Here are some mistakes that I made that you can hopefully avoid:
