@@ -2990,8 +2990,11 @@ body {
 
 .hud-section-weather .degree-symbol {
   margin-left: -0.2em; }
-.hud-section-weather .hud-section-weather-current {
+.hud-section-weather-current {
   font-size: 60px; }
+.hud-section-weather-line {
+  float: left;
+  width: 100%; }
 
 .hud-section-subway .hud-section-subway-line {
   display: inline-block;

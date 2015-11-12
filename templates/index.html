@@ -42,18 +42,27 @@
 						<% } %>
 					</li>
 					<li class="hud-section-weather-preview">
-						<% if (d.weather.preview.tomorrow) { %>
-							Tomorrow:
+							<% if (d.weather.preview.tomorrow) { %>
+								<span class="hud-section-weather-line">
+									Tomorrow:
+									<%= d.weather.preview.low %>
+									/
+									<%= d.weather.preview.high %>
+								</span>
+								<span class="hud-section-weather-line">
+									<%= d.weather.preview.summary %>
+								</span>
+							<% } else { %>
+								<span class="hud-section-weather-line">
+									<%= d.weather.preview.low %>
+									/
+									<%= d.weather.preview.high %>
+									<%= d.weather.preview.summary %>
+								</span>
 						<% } %>
-						<%= d.weather.preview.low %>
-						/
-						<%= d.weather.preview.high %>
-						<% if (d.weather.preview.tomorrow) { %>
-							<br />
-						<% } %>
-						<%= d.weather.preview.summary %>
-						<br />
-						<%= d.weather.preview.precip %>% chance of rain
+						<span class="hud-section-weather-line">
+							<%= d.weather.preview.precip %>% chance of rain
+						</span>
 					</li>
 				</div>
 			<% } %>
