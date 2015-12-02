@@ -82,9 +82,6 @@ def chores():
                 res.append(chore)
             else:
                 if today.hour >= time_range[0] and today.hour < time_range[1]:
-                    # scrub the time_range attr from the chore, since we are
-                    # passing this to JS, which doesn't know about tuples.
-                    chore.pop('time_range', None)
                     res.append(chore)
 
     return jsonify({
