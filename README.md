@@ -96,7 +96,7 @@ BIRTHDAYS = {
 # chore is a dictionary with the following values:
 # - text (str, required): description of the chore that will display
 # - icon (str, optional): if present, an icon span will print with this class
-# - time_range (tuple, optional): a start hour (inclusive) and end hour
+# - time_range (list, optional): a start hour (inclusive) and end hour
 #     (exclusive) during which to display the chore
 CHORES = {
     'Monday': [
@@ -104,7 +104,8 @@ CHORES = {
     'Tuesday': [
         {
             'text': 'Take out recycling tonight',
-            'icon': 'recycling'
+            'icon': 'recycling',
+						'time_range': [8, 21]
         }
     ],
     'Wednesday': [
