@@ -115,7 +115,7 @@ window.AutoHUDController = {
     return number;
   },
   birthdaysGetter: function() {
-    return $.ajax("/birthdays", {
+    return $.ajax(C.birthdaysUrl, {
       type: "GET",
       success: (function(_this) {
         return function(data) {
@@ -125,11 +125,25 @@ window.AutoHUDController = {
     });
   },
   choresGetter: function() {
-    return $.ajax("/chores", {
+    return $.ajax(C.choresUrl, {
       type: "GET",
       success: (function(_this) {
         return function(data) {
           return _this.model.set(data);
+        };
+      })(this)
+    });
+  },
+  birdPodcastsGetter: function() {
+    return $.ajax(C.birdPodcastsUrl, {
+      type: "GET",
+      success: (function(_this) {
+        return function(data) {
+          var res;
+          res = {
+            birdPodcastCount: data.program_count
+          };
+          return _this.model.set(res);
         };
       })(this)
     });

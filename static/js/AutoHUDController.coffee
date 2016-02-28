@@ -60,7 +60,7 @@ window.AutoHUDController = {
 	#############################################################################
 
 	birthdaysGetter: ->
-		$.ajax("/birthdays", {
+		$.ajax(C.birthdaysUrl, {
 			type: "GET"
 			success: (data) =>
 				@model.set(data)
@@ -71,10 +71,25 @@ window.AutoHUDController = {
 	#############################################################################
 
 	choresGetter: ->
-		$.ajax("/chores", {
+		$.ajax(C.choresUrl, {
 			type: "GET"
 			success: (data) =>
 				@model.set(data)
+		})
+
+
+	# chores
+	#############################################################################
+
+	birdPodcastsGetter: ->
+		$.ajax(C.birdPodcastsUrl, {
+			type: "GET"
+			success: (data) =>
+				res = {
+					birdPodcastCount: data.program_count
+				}
+
+				@model.set(res)
 		})
 
 

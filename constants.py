@@ -6,6 +6,7 @@ C = {
         'weather',
         'birthdays',
         'chores',
+        'birdPodcasts',
         'subway',
         'noConnection',
     ],
@@ -19,7 +20,10 @@ C = {
     'birthdaysUrl': '/birthdays',
 
     'choresPollTime': 1000 * 60,
-    'choresUrl': '/chore',
+    'choresUrl': '/chores',
+
+    'birdPodcastsPollTime': 1000 * 60 * 5,
+    'birdPodcastsUrl': 'http://www.lauraerickson.com/radio/program-count',
 
     'subwayPollTime': 1000 * 60,
     'subwayUrl': '/mta-service-status',
