@@ -33,6 +33,11 @@ def mta_service_status():
     r = requests.get(C['subwayRemoteUrl'])
     return Response(r.text, mimetype='text/xml')
 
+@app.route('/song')
+def song():
+    r = requests.get(C['songRemoteUrl'])
+    return Response(r.text, mimetype='text/html')
+
 @app.route('/birthdays')
 def birthdays():
     today = datetime.today()

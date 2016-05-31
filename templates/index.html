@@ -119,6 +119,15 @@
 			<% } %>
 		</script>
 
+		<script id="song-template" type="text/template">
+			<% if (d.song) { %>
+				<div class="hud-section hud-section-song">
+					<%= d.song %>
+					<span class="fa fa-music"></span>
+				</div>
+			<% } %>
+		</script>
+
 		<script id="noConnection-template" type="text/template">
 			<% if (d.noConnection) { %>
 				<div class="hud-section hud-section-no-connection">

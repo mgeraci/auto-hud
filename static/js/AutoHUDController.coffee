@@ -218,4 +218,34 @@ window.AutoHUDController = {
 			""")
 
 		return res.join("")
+
+
+	# currenty playing song
+	#############################################################################
+
+	songGetter: ->
+		$.get(C.songUrl, (data) =>
+			if !data?
+				@model.set({song: null})
+				return
+
+			@formatSong(data)
+		)
+
+	formatSong: (data) ->
+		data = $.parseHTML(data)
+		html = $("<div></div>").append(data)
+		playingStatus = html.find("#playingStatus").text().toLowerCase()
+		isPlaying = playingStatus.indexOf("playing") >= 0
+
+		if isPlaying
+			song = html.find(".playingSong").text()
+				.replace("(Delete)", "")
+				.replace(/[\n\r\t]/g, "")
+				.replace(/\s+/g, " ")
+				.trim()
+
+			@model.set({song: song})
+		else
+			@model.set({song: null})
 }

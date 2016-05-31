@@ -8,6 +8,7 @@ C = {
         'chores',
         'birdPodcasts',
         'subway',
+        'song',
         'noConnection',
     ],
 
@@ -28,6 +29,10 @@ C = {
     'subwayPollTime': 1000 * 60,
     'subwayUrl': '/mta-service-status',
     'subwayRemoteUrl': 'http://web.mta.info/status/serviceStatus.txt',
+
+    'songPollTime': 1000 * 10,
+    'songUrl': '/song',
+    'songRemoteUrl': 'http://192.168.1.111:9000/status.html',
 
     # indicate which subway lines you wish to display with a `1`
     'subwayLinesToShow': {

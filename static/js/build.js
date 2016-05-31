@@ -270,6 +270,36 @@ window.AutoHUDController = {
       res.push("<span class=\"hud-section-subway-line\">" + line + "</span>");
     }
     return res.join("");
+  },
+  songGetter: function() {
+    return $.get(C.songUrl, (function(_this) {
+      return function(data) {
+        if (data == null) {
+          _this.model.set({
+            song: null
+          });
+          return;
+        }
+        return _this.formatSong(data);
+      };
+    })(this));
+  },
+  formatSong: function(data) {
+    var html, isPlaying, playingStatus, song;
+    data = $.parseHTML(data);
+    html = $("<div></div>").append(data);
+    playingStatus = html.find("#playingStatus").text().toLowerCase();
+    isPlaying = playingStatus.indexOf("playing") >= 0;
+    if (isPlaying) {
+      song = html.find(".playingSong").text().replace("(Delete)", "").replace(/[\n\r\t]/g, "").replace(/\s+/g, " ").trim();
+      return this.model.set({
+        song: song
+      });
+    } else {
+      return this.model.set({
+        song: null
+      });
+    }
   }
 };
 
