@@ -1,5 +1,5 @@
 window.AutoHUDController = {
-	useTestWeatherData: true
+	useTestWeatherData: false
 	watchers: {}
 
 	init: ->

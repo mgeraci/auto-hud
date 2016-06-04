@@ -59,7 +59,7 @@ window.AutoHUD = {
 };
 
 window.AutoHUDController = {
-  useTestWeatherData: true,
+  useTestWeatherData: false,
   watchers: {},
   init: function() {
     var i, len, ref, results, section;
