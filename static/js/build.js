@@ -59,7 +59,7 @@ window.AutoHUD = {
 };
 
 window.AutoHUDController = {
-  useTestWeatherData: false,
+  useTestWeatherData: true,
   watchers: {},
   init: function() {
     var i, len, ref, results, section;
@@ -285,21 +285,30 @@ window.AutoHUDController = {
     })(this));
   },
   formatSong: function(data) {
-    var html, isPlaying, playingStatus, song;
+    var html, i, isPlaying, key, len, link, linkMap, links, playingStatus, resultsMap, value;
     data = $.parseHTML(data);
     html = $("<div></div>").append(data);
     playingStatus = html.find("#playingStatus").text().toLowerCase();
     isPlaying = playingStatus.indexOf("playing") >= 0;
-    if (isPlaying) {
-      song = html.find(".playingSong").text().replace("(Delete)", "").replace(/[\n\r\t]/g, "").replace(/\s+/g, " ").trim();
-      return this.model.set({
-        song: song
-      });
-    } else {
-      return this.model.set({
-        song: null
-      });
+    linkMap = {
+      artist: "artist_id",
+      album: "album_id",
+      song: "songinfo"
+    };
+    resultsMap = {};
+    if (true || isPlaying) {
+      links = html.find(".playingSong a");
+      for (i = 0, len = links.length; i < len; i++) {
+        link = links[i];
+        for (key in linkMap) {
+          value = linkMap[key];
+          if (link.href.indexOf(value) >= 0) {
+            resultsMap[key] = link.text;
+          }
+        }
+      }
     }
+    return this.model.set(resultsMap);
   }
 };
 

@@ -106,7 +106,7 @@ body
     width: 100%
 
 .hud-section-subway
-  .hud-section-subway-line
+  &-line
     display: inline-block
     width: $text-size-tertiary
     height: $text-size-tertiary
@@ -118,8 +118,20 @@ body
     font-size: 0.7em
     line-height: 1.5em
 
-  .hud-section-subway-status
+  &-status
     text-transform: lowercase
+
+.hud-section-song
+  &-text,
+  &-icon
+    float: right
+
+  &-text-artist
+    float: left
+    width: 100%
+
+  &-icon
+    margin-left: 15px
 
 .hud-section-no-connection
   font-size: $text-size-quartiary

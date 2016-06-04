@@ -120,10 +120,18 @@
 		</script>
 
 		<script id="song-template" type="text/template">
-			<% if (d.song) { %>
+			<% if (d.song && d.artist) { %>
 				<div class="hud-section hud-section-song">
-					<%= d.song %>
-					<span class="fa fa-music"></span>
+					<span class="hud-section-song-icon fa fa-music"></span>
+					<span class="hud-section-song-text">
+						<span class="hud-section-song-text-artist">
+							<%= d.artist %> - <%= d.song %>
+						</span>
+						<% if (d.album) { %>
+							<br />
+							<%= d.album %>
+						<% } %>
+					</span>
 				</div>
 			<% } %>
 		</script>

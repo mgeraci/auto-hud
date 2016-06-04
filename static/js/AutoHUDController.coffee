@@ -1,5 +1,5 @@
 window.AutoHUDController = {
-	useTestWeatherData: false
+	useTestWeatherData: true
 	watchers: {}
 
 	init: ->
@@ -238,14 +238,22 @@ window.AutoHUDController = {
 		playingStatus = html.find("#playingStatus").text().toLowerCase()
 		isPlaying = playingStatus.indexOf("playing") >= 0
 
-		if isPlaying
-			song = html.find(".playingSong").text()
-				.replace("(Delete)", "")
-				.replace(/[\n\r\t]/g, "")
-				.replace(/\s+/g, " ")
-				.trim()
+		# key is what part of the song, value is what to look for in a link
+		linkMap = {
+			artist: "artist_id"
+			album: "album_id"
+			song: "songinfo"
+		}
 
-			@model.set({song: song})
-		else
-			@model.set({song: null})
+		resultsMap = {}
+
+		if true || isPlaying
+			links = html.find(".playingSong a")
+
+			for link in links
+				for key, value of linkMap
+					if link.href.indexOf(value) >= 0
+						resultsMap[key] = link.text
+
+		@model.set(resultsMap)
 }

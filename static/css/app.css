@@ -2997,7 +2997,7 @@ body {
   float: left;
   width: 100%; }
 
-.hud-section-subway .hud-section-subway-line {
+.hud-section-subway-line {
   display: inline-block;
   width: 40px;
   height: 40px;
@@ -3007,8 +3007,16 @@ body {
   text-align: center;
   font-size: 0.7em;
   line-height: 1.5em; }
-.hud-section-subway .hud-section-subway-status {
+.hud-section-subway-status {
   text-transform: lowercase; }
+
+.hud-section-song-text, .hud-section-song-icon {
+  float: right; }
+.hud-section-song-text-artist {
+  float: left;
+  width: 100%; }
+.hud-section-song-icon {
+  margin-left: 15px; }
 
 .hud-section-no-connection {
   font-size: 30px; }
