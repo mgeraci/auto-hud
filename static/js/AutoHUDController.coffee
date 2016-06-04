@@ -247,7 +247,7 @@ window.AutoHUDController = {
 
 		resultsMap = {}
 
-		if true || isPlaying
+		if isPlaying
 			links = html.find(".playingSong a")
 
 			for link in links

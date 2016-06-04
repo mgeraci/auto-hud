@@ -296,7 +296,7 @@ window.AutoHUDController = {
       song: "songinfo"
     };
     resultsMap = {};
-    if (true || isPlaying) {
+    if (isPlaying) {
       links = html.find(".playingSong a");
       for (i = 0, len = links.length; i < len; i++) {
         link = links[i];
