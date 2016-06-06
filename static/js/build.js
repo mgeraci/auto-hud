@@ -295,7 +295,11 @@ window.AutoHUDController = {
       album: "album_id",
       song: "songinfo"
     };
-    resultsMap = {};
+    resultsMap = {
+      artist: null,
+      album: null,
+      song: null
+    };
     if (isPlaying) {
       links = html.find(".playingSong a");
       for (i = 0, len = links.length; i < len; i++) {

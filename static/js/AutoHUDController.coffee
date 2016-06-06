@@ -245,7 +245,13 @@ window.AutoHUDController = {
 			song: "songinfo"
 		}
 
-		resultsMap = {}
+		# start with the results set to null. this way, when it goes from playing
+		# to paused, it clears the display
+		resultsMap = {
+			artist: null
+			album: null
+			song: null
+		}
 
 		if isPlaying
 			links = html.find(".playingSong a")
