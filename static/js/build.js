@@ -134,20 +134,6 @@ window.AutoHUDController = {
       })(this)
     });
   },
-  birdPodcastsGetter: function() {
-    return $.ajax(C.birdPodcastsUrl, {
-      type: "GET",
-      success: (function(_this) {
-        return function(data) {
-          var res;
-          res = {
-            birdPodcastCount: data.program_count
-          };
-          return _this.model.set(res);
-        };
-      })(this)
-    });
-  },
   weatherGetter: function() {
     var url;
     if (this.useTestWeatherData) {

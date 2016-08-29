@@ -78,21 +78,6 @@ window.AutoHUDController = {
 		})
 
 
-	# chores
-	#############################################################################
-
-	birdPodcastsGetter: ->
-		$.ajax(C.birdPodcastsUrl, {
-			type: "GET"
-			success: (data) =>
-				res = {
-					birdPodcastCount: data.program_count
-				}
-
-				@model.set(res)
-		})
-
-
 	# weather
 	#############################################################################
 

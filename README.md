@@ -44,9 +44,14 @@ workon auto-hud
 pip install -r requirements.txt
 ```
 
-Then, to start the server, run `python auto-hud.py`, and hit localhost:5000.
-But you'll need to add a configuration file before it starts up. What
-configuration file? Glad you asked.
+Then, to start the server, run:
+
+```
+python auto-hud.py
+```
+
+Tehn visit localhost:5000. But you'll need to add a configuration file before
+it starts up properly. What configuration file? Glad you asked.
 
 ## Configuration
 Auto HUD requires two configuration files in the project root to run,
