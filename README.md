@@ -50,7 +50,7 @@ Then, to start the server, run:
 python auto-hud.py
 ```
 
-Tehn visit localhost:5000. But you'll need to add a configuration file before
+Then visit localhost:5000. But you'll need to add a configuration file before
 it starts up properly. What configuration file? Glad you asked.
 
 ## Configuration
