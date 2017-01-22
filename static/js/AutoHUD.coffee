@@ -24,6 +24,7 @@ window.AutoHUD = {
 		@controller.init()
 
 		@watchVersion(params)
+		@watchRefershTime(params.refreshTime)
 
 
 	# versioning
@@ -56,4 +57,15 @@ window.AutoHUD = {
 		# if the version has updated, refresh the page
 		if data.version != @version
 			window.location.reload()
+
+
+	# hard refresher
+	#############################################################################
+
+	watchRefershTime: (time) ->
+		return if !time
+
+		setTimeout(->
+			window.location.reload()
+		, time)
 }

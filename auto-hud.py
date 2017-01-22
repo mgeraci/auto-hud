@@ -7,6 +7,7 @@ import requests
 
 # secret settings
 from localsettings import VERSION
+from localsettings import REFRESH_TIME
 from localsettings import BIRTHDAYS
 from localsettings import CHORES
 from localsettings import FORECASTIO_API_KEY
@@ -23,6 +24,7 @@ def index_route(params={}):
 
     return render_template('index.html', params = {
       'version': VERSION,
+      'refreshTime': REFRESH_TIME,
       'C': C,
       'forecastioApiKey': FORECASTIO_API_KEY,
       'forecastioLatLong': FORECASTIO_LAT_LONG,

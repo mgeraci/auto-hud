@@ -70,6 +70,9 @@ project root. You'll also need to obtain a free api key for
 # swap the css, js, or templates
 VERSION = "0.000"
 
+# how often the entire page should hard refresh (0 for no refreshing)
+REFRESH_TIME = 10000
+
 # your info for forecast.io
 FORECASTIO_API_KEY = "<your api key>"
 FORECASTIO_LAT_LONG = "40.676423,-73.980488"
