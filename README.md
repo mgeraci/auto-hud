@@ -217,7 +217,7 @@ Then, create a plist file in `~/Library/LaunchAgents/` that runs the script:
 	<key>Label</key>
 	<string>auto-hud starter</string>
 	<key>Program</key>
-	<string>/Users/mediabox/start-auto-hud.sh</string>
+	<string>/Users/mediabox/bin/start-auto-hud.sh</string>
 	<key>RunAtLoad</key>
 	<true/>
 	<key>StandardErrorPath</key>

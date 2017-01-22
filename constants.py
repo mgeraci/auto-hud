@@ -14,7 +14,7 @@ C = {
     'timePollTime': 10,
 
     'weatherPollTime': 1000 * 60 * 5,
-    'weatherUrl': 'https://api.forecast.io/forecast/',
+    'weatherUrl': 'https://api.darksky.net/forecast/',
 
     'birthdaysPollTime': 1000 * 60,
     'birthdaysUrl': '/birthdays',
