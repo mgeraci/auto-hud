@@ -20,6 +20,7 @@ Current modules include:
 * Birthdays
 * Chore reminders
 * Subway status
+* Music playing in the living room
 * Notification if the server goes down
 
 ## Contents
