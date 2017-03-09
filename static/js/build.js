@@ -14,8 +14,7 @@ window.AutoHUD = {
     this.model.set(params);
     this.view.init();
     this.controller.init();
-    this.watchVersion(params);
-    return this.watchRefershTime(params.refreshTime);
+    return this.watchVersion(params);
   },
   watchVersion: function(params) {
     if (params.version == null) {
@@ -56,14 +55,6 @@ window.AutoHUD = {
     if (data.version !== this.version) {
       return window.location.reload();
     }
-  },
-  watchRefershTime: function(time) {
-    if (!time) {
-      return;
-    }
-    return setTimeout(function() {
-      return window.location.reload();
-    }, time);
   }
 };
 
