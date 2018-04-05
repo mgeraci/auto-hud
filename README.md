@@ -111,7 +111,7 @@ CHORES = {
         {
             'text': 'Take out recycling tonight',
             'icon': 'recycling',
-						'time_range': [8, 21]
+	    'time_range': [8, 21]
         }
     ],
     'Wednesday': [
